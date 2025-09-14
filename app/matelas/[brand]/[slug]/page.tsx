@@ -149,7 +149,11 @@ export default function Page({ params }: PageProps) {
                 </span>
               </div>
               <PriceBlock price={m.price} originalPrice={m.originalPrice} />
-              <AmazonButton href={m.amazonLink} />
+              <AmazonButton
+                asin={m.asin || ''}
+                brand={m.brand}
+                product={m.name}
+              />
               <p className="text-center text-xs text-slate-500">
                 Lien d’affiliation : nous pouvons percevoir une commission, sans
                 surcoût pour vous.
@@ -231,7 +235,7 @@ export default function Page({ params }: PageProps) {
       </main>
       <Footer />
       <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-white/30 bg-white/90 p-3 backdrop-blur md:hidden">
-        <AmazonButton href={m.amazonLink} />
+        <AmazonButton asin={m.asin || ''} brand={m.brand} product={m.name} />
       </div>
     </div>
   );

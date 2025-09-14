@@ -159,7 +159,11 @@ export function MattressCard({ mattress, className }: MattressCardProps) {
             <Button variant="outline" className="w-full" size="xl" asChild>
               <Link href={productUrl}>Voir les détails</Link>
             </Button>
-            <AmazonButton href={mattress.amazonLink} />
+            <AmazonButton
+              asin={mattress.asin || ''}
+              brand={mattress.brand}
+              product={mattress.name}
+            />
           </div>
         </CardContent>
       </Card>
