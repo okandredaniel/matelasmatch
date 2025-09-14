@@ -197,24 +197,12 @@ export default function Page({ params }: PageProps) {
           />
         </Section>
 
-        <Section title="Proves sociales">
-          <SocialProof
-            brand={m.brand}
-            brandUrl={m.brandUrl}
-            trustpilotUrl={m.trustpilotUrl}
-            brandTrust={m.brandTrust}
-          />
+        <Section title="Avis & confiance">
+          <SocialProof mattress={m} />
         </Section>
 
         <Section title="Où acheter">
-          <MerchantLinks
-            merchants={m.merchants}
-            dataset={{
-              track: 'affiliate_click',
-              productId: String(m.id),
-              position: 'merchants',
-            }}
-          />
+          <MerchantLinks mattress={m} />
         </Section>
 
         <Section>

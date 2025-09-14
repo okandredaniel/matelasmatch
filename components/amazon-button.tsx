@@ -5,9 +5,14 @@ import { toBrandSlug, toProductSlug } from '@/lib/slug';
 import { track } from '@vercel/analytics';
 import { ExternalLink } from 'lucide-react';
 
-type Props = { asin: string; brand?: string; product?: string };
+type Props = {
+  asin: string;
+  brand?: string;
+  product?: string;
+  compact?: boolean;
+};
 
-export function AmazonButton({ asin, brand, product }: Props) {
+export function AmazonButton({ asin, brand, product, compact }: Props) {
   const b = brand ? toBrandSlug(brand) : undefined;
   const p = product ? toProductSlug(product) : undefined;
 
@@ -24,7 +29,12 @@ export function AmazonButton({ asin, brand, product }: Props) {
   };
 
   return (
-    <Button variant="affiliate" size="xl" block asChild>
+    <Button
+      variant="affiliate"
+      size={compact ? 'lg' : 'xl'}
+      block={!compact}
+      asChild
+    >
       <a
         href={href}
         target="_blank"
