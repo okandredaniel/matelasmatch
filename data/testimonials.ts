@@ -1,0 +1,58 @@
+import type { Testimonial } from '@/types/testimonial';
+
+export const testimonials: Testimonial[] = [
+  {
+    id: 't1',
+    rating: 5,
+    text: "Grâce à MatelasMatch, j'ai enfin trouvé le matelas parfait pour mes douleurs de dos. Le comparateur m'a aidé à choisir un matelas ferme qui a complètement transformé mes nuits !",
+    name: 'Marie Dubois',
+    location: 'Lyon, France',
+    initials: 'MD',
+    gradient: 'from-indigo-400 to-purple-400',
+  },
+  {
+    id: 't2',
+    rating: 5,
+    text: "Interface très intuitive et conseils d'experts précieux. J'ai pu comparer facilement les matelas et trouver celui qui correspondait à mon budget. Livraison Amazon rapide en plus !",
+    name: 'Jean Moreau',
+    location: 'Marseille, France',
+    initials: 'JM',
+    gradient: 'from-emerald-400 to-teal-400',
+  },
+  {
+    id: 't3',
+    rating: 4,
+    text: "Excellent site pour comparer les matelas ! Les filtres par type et confort sont très pratiques. J'ai trouvé un matelas hybride parfait pour mon couple avec des préférences différentes.",
+    name: 'Sophie Lefevre',
+    location: 'Toulouse, France',
+    initials: 'SL',
+    gradient: 'from-rose-400 to-pink-400',
+  },
+  {
+    id: 't4',
+    rating: 5,
+    text: "Les articles du blog m'ont énormément aidé à comprendre les différences entre les types de matelas. Service client réactif et conseils personnalisés au top !",
+    name: 'Pierre Martin',
+    location: 'Bordeaux, France',
+    initials: 'PM',
+    gradient: 'from-amber-400 to-orange-400',
+  },
+  {
+    id: 't5',
+    rating: 5,
+    text: "Parfait pour les indécis comme moi ! Le comparateur m'a permis de voir tous les avantages de chaque matelas. Mon matelas en latex naturel est un vrai bonheur.",
+    name: 'Anne Rousseau',
+    location: 'Nantes, France',
+    initials: 'AR',
+    gradient: 'from-violet-400 to-purple-400',
+  },
+  {
+    id: 't6',
+    rating: 4,
+    text: "Site très bien conçu avec des informations claires. J'ai apprécié pouvoir filtrer par niveau de confort. Mon matelas à mémoire de forme correspond exactement à mes attentes !",
+    name: 'Thomas Bernard',
+    location: 'Lille, France',
+    initials: 'TB',
+    gradient: 'from-cyan-400 to-blue-400',
+  },
+];
