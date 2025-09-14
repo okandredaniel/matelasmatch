@@ -8,7 +8,6 @@ import { ProcessSteps } from '@/components/process-steps';
 import { StatsGrid } from '@/components/stats-grid';
 import { TeamGrid } from '@/components/team-grid';
 import { ValuesGrid } from '@/components/values-grid';
-import { absoluteUrl } from '@/lib/site';
 import {
   Award,
   Heart,
@@ -18,36 +17,6 @@ import {
   TrendingUp,
   Users,
 } from 'lucide-react';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: "Guide d'achat | MatelasMatch",
-  description:
-    'Tout ce qu’il faut savoir pour choisir le bon matelas selon votre profil.',
-  alternates: { canonical: absoluteUrl('/guide-achat') },
-  openGraph: {
-    type: 'website',
-    url: absoluteUrl('/guide-achat'),
-    title: "Guide d'achat | MatelasMatch",
-    description:
-      'Tout ce qu’il faut savoir pour choisir le bon matelas selon votre profil.',
-    images: [
-      {
-        url: absoluteUrl('/og-image.png'),
-        width: 1200,
-        height: 630,
-        alt: "Guide d'achat MatelasMatch",
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: "Guide d'achat | MatelasMatch",
-    description:
-      'Tout ce qu’il faut savoir pour choisir le bon matelas selon votre profil.',
-    images: [absoluteUrl('/og-image.png')],
-  },
-};
 
 export default function GuideAchatPage() {
   const values = [

@@ -1,5 +1,3 @@
-'use client';
-
 import { BlogSection } from '@/components/blog-section';
 import { CTASection } from '@/components/cta-section';
 import { FAQSection } from '@/components/faq-section';

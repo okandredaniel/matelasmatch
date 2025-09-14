@@ -9,40 +9,9 @@ import { Header } from '@/components/header';
 import { JsonLd } from '@/components/json-ld';
 import { TestimonialHighlight } from '@/components/testimonial-highlight';
 import { Button } from '@/components/ui/button';
-import { absoluteUrl } from '@/lib/site';
 import { HelpCircle } from 'lucide-react';
-import { Metadata } from 'next';
 import Link from 'next/link';
 import { useMemo } from 'react';
-
-export const metadata: Metadata = {
-  title: 'Contact | MatelasMatch',
-  description:
-    'Écrivez-nous pour des conseils personnalisés et des questions sur les produits.',
-  alternates: { canonical: absoluteUrl('/contact') },
-  openGraph: {
-    type: 'website',
-    url: absoluteUrl('/contact'),
-    title: 'Contact | MatelasMatch',
-    description:
-      'Écrivez-nous pour des conseils personnalisés et des questions sur les produits.',
-    images: [
-      {
-        url: absoluteUrl('/og-image.png'),
-        width: 1200,
-        height: 630,
-        alt: 'Contact MatelasMatch',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Contact | MatelasMatch',
-    description:
-      'Écrivez-nous pour des conseils personnalisés et des questions sur les produits.',
-    images: [absoluteUrl('/og-image.png')],
-  },
-};
 
 export default function ContactPage() {
   const contactJsonLd = useMemo(

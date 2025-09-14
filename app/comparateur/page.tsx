@@ -7,39 +7,8 @@ import { MattressCard } from '@/components/mattress-card';
 import { PageHero } from '@/components/page-hero';
 import { ResultsCount } from '@/components/results-count';
 import { mattresses } from '@/data/mattresses';
-import { absoluteUrl } from '@/lib/site';
-import { Metadata } from 'next';
 import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
-
-export const metadata: Metadata = {
-  title: 'Comparateur de matelas | MatelasMatch',
-  description:
-    'Filtrez par type, fermeté, budget et plus pour trouver votre matelas idéal.',
-  alternates: { canonical: absoluteUrl('/comparateur') },
-  openGraph: {
-    type: 'website',
-    url: absoluteUrl('/comparateur'),
-    title: 'Comparateur de matelas | MatelasMatch',
-    description:
-      'Filtrez par type, fermeté, budget et plus pour trouver votre matelas idéal.',
-    images: [
-      {
-        url: absoluteUrl('/og-image.png'),
-        width: 1200,
-        height: 630,
-        alt: 'Comparateur MatelasMatch',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Comparateur de matelas | MatelasMatch',
-    description:
-      'Filtrez par type, fermeté, budget et plus pour trouver votre matelas idéal.',
-    images: [absoluteUrl('/og-image.png')],
-  },
-};
 
 export default function ComparateurPage() {
   const params = useSearchParams();
