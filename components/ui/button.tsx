@@ -23,7 +23,7 @@ const buttonVariants = cva(
           'bg-transparent text-foreground hover:bg-accent hover:text-accent-foreground',
         link: 'bg-transparent text-accent underline-offset-4 h-auto p-0 hover:underline focus-visible:underline visited:text-accent/90',
         affiliate:
-          'text-white border border-white/20 bg-gradient-to-r from-indigo-500/80 to-purple-500/80 backdrop-blur-md shadow-lg hover:from-indigo-600/90 hover:to-purple-600/90 hover:shadow-indigo-500/25 motion-safe:transition-transform motion-safe:hover:scale-105',
+          'text-white border border-white/20 bg-gradient-to-r from-indigo-500/80 to-purple-500/80 backdrop-blur-md shadow-lg hover:from-indigo-600/90 hover:to-purple-600/90 hover:shadow-indigo-500/25 motion-safe:transition-transform',
       },
       size: {
         sm: 'h-8 px-3',
