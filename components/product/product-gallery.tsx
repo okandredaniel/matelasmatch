@@ -8,7 +8,9 @@ type Props = {
 };
 
 export function ProductGallery({ images, fallback, title, badge }: Props) {
-  const src = images.length ? images[0] : fallback;
+  const src = (images[0] || fallback).trim();
+  if (!src) return null;
+
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-4">
       <div className="relative overflow-hidden rounded-xl ring-1 ring-slate-200">
@@ -19,6 +21,7 @@ export function ProductGallery({ images, fallback, title, badge }: Props) {
           height={800}
           className="h-[420px] w-full object-cover"
           priority
+          sizes="(min-width:1024px) 800px, 100vw"
         />
         {badge ? (
           <span className="absolute left-3 top-3 rounded-md bg-accent px-2 py-1 text-xs font-semibold text-white">
