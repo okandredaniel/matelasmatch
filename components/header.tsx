@@ -19,7 +19,7 @@ export function Header() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 w-full glass-header relative">
+    <header className="sticky top-0 z-50 w-full glass-header">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white/80 px-3 py-2 rounded"
