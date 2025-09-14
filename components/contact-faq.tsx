@@ -1,8 +1,13 @@
 import { faqItems } from '@/data/faq';
+import type { FaqItem } from '@/types/faq';
 import { HelpCircle, Send, Star } from 'lucide-react';
 import Link from 'next/link';
 
-export function ContactFAQ() {
+type Props = { items?: FaqItem[]; limit?: number };
+
+export function ContactFAQ({ items, limit = 6 }: Props) {
+  const list = (items ?? (faqItems as FaqItem[])).slice(0, limit);
+
   return (
     <div className="glass-card-enhanced rounded-3xl p-8">
       <div className="flex items-center gap-3 mb-6">
@@ -13,7 +18,7 @@ export function ContactFAQ() {
       </div>
 
       <div className="space-y-6">
-        {faqItems.map((item: any, index: number) => (
+        {list.map((item, index) => (
           <div
             key={index}
             className="border-b border-white/20 pb-4 last:border-b-0"
@@ -21,21 +26,15 @@ export function ContactFAQ() {
             <h3 className="font-medium text-foreground mb-2">
               {item.question}
             </h3>
-            {typeof item.answer === 'string' ? (
-              <p className="text-sm text-slate-600 text-pretty">
-                {item.answer}
-              </p>
-            ) : (
-              <div className="text-sm text-slate-600 text-pretty [&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mt-1">
-                {item.answer}
-              </div>
-            )}
+            <p className="text-sm text-slate-600">
+              {typeof item.answer === 'string' ? item.answer : ''}
+            </p>
           </div>
         ))}
       </div>
 
-      <div className="mt-8 p-4 bg-accent/5 rounded-2xl border border-accent/20">
-        <div className="flex items-center gap-2 mb-2">
+      <div className="mt-8 rounded-2xl bg-white/40 p-4">
+        <div className="flex items-center gap-2 text-slate-800">
           <Star className="w-5 h-5 text-accent" aria-hidden="true" />
           <span className="font-medium text-foreground">Conseil d’expert</span>
         </div>

@@ -1,35 +1,36 @@
-import { HelpCircle, Star } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { HelpCircle, Send } from 'lucide-react';
 import Link from 'next/link';
 
 export function ContactCTA() {
   return (
-    <section className="py-16 px-4 relative z-10">
+    <section>
       <div className="container mx-auto max-w-4xl">
-        <div className="glass-card-enhanced rounded-3xl p-8 text-center">
+        <div className="rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900">
           <h2 className="font-sans text-2xl font-bold text-foreground mb-4">
             Besoin d’aide pour choisir votre matelas ?
           </h2>
-          <p className="text-slate-600 mb-6">
+          <p className="text-slate-600 dark:text-slate-300 mb-6">
             Notre comparateur intelligent vous guide vers le matelas idéal en
             quelques clics.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/comparateur"
-              prefetch={false}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium hover:shadow-md transition-all duration-300"
-            >
-              Utiliser le comparateur
-              <Star className="w-5 h-5" />
-            </Link>
-            <Link
-              href="/blog"
-              prefetch={false}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium hover:shadow-md transition-all duration-300"
-            >
-              Lire nos guides
-              <HelpCircle className="w-5 h-5" />
-            </Link>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Button asChild size="lg">
+              <Link
+                href="/comparateur"
+                prefetch={false}
+                aria-label="Essayer le comparateur"
+              >
+                <Send className="w-4 h-4 mr-2" aria-hidden="true" />
+                Essayer le comparateur
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link href="/blog" prefetch={false} aria-label="Lire nos guides">
+                <HelpCircle className="w-4 h-4 mr-2" aria-hidden="true" />
+                Lire nos guides
+              </Link>
+            </Button>
           </div>
         </div>
       </div>

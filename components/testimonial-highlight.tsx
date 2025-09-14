@@ -2,16 +2,13 @@ import { Star } from 'lucide-react';
 
 export function TestimonialHighlight() {
   return (
-    <section className="py-16 px-4 relative z-10">
+    <section>
       <div className="container mx-auto max-w-4xl">
-        <div className="glass-card-enhanced rounded-3xl p-8 text-center">
-          <div className="flex justify-center mb-4">
-            <div className="flex items-center" aria-hidden="true">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className="w-5 h-5 text-yellow-400 fill-current"
-                />
+        <div className="rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="flex justify-center mb-4" aria-hidden="true">
+            <div className="flex items-center gap-1">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="w-5 h-5 text-amber-400 fill-current" />
               ))}
             </div>
           </div>
@@ -20,7 +17,7 @@ export function TestimonialHighlight() {
             pour mes problèmes de dos. Leurs conseils personnalisés ont fait
             toute la différence ! »
           </blockquote>
-          <cite className="text-sm text-slate-600">
+          <cite className="text-sm text-slate-600 dark:text-slate-300 not-italic">
             Sarah M., utilisatrice satisfaite
           </cite>
         </div>

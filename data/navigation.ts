@@ -35,6 +35,7 @@ export const footerSections: NavSection[] = [
       { href: '/articles', label: 'Articles & guides' },
       { href: '/blog?c=Comparatif', label: 'Comparatifs' },
       { href: '/avis-clients', label: 'Avis clients' },
+      { href: '/faq', label: 'FAQ' },
     ],
   },
   {

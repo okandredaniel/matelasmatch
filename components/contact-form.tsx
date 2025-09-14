@@ -1,55 +1,57 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { contactSubjects } from '@/data/contact';
-import { MessageCircle, Send } from 'lucide-react';
-import * as React from 'react';
+import { useState } from 'react';
+
+type FormState = {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  website: string;
+};
 
 export function ContactForm() {
-  const [submitting, setSubmitting] = React.useState(false);
-  const [submitted, setSubmitted] = React.useState(false);
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = useState<FormState>({
     name: '',
     email: '',
     subject: '',
     message: '',
     website: '',
   });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const onChange =
-    (key: 'name' | 'email' | 'message') =>
+    (key: keyof FormState) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
       setFormData((s) => ({ ...s, [key]: e.target.value }));
 
-  const onSubject = (value: string) =>
-    setFormData((s) => ({ ...s, subject: value }));
-
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    if (formData.website) return;
-    if (
-      !formData.name ||
-      !formData.email ||
-      !formData.subject ||
-      !formData.message
-    )
+    setError(null);
+    if (formData.website) {
+      setSubmitted(true);
       return;
-
-    setSubmitting(true);
+    }
+    setLoading(true);
     try {
-      await new Promise((r) => setTimeout(r, 400));
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
+      if (!res.ok) throw new Error('Request failed');
+      setSubmitted(true);
       setFormData({
         name: '',
         email: '',
@@ -57,133 +59,103 @@ export function ContactForm() {
         message: '',
         website: '',
       });
-      setSubmitted(false);
+    } catch {
+      setError('Une erreur est survenue. Veuillez réessayer.');
     } finally {
-      setSubmitting(false);
+      setLoading(false);
     }
   };
 
-  const nameInvalid = submitted && !formData.name;
-  const emailInvalid = submitted && !formData.email;
-  const subjectInvalid = submitted && !formData.subject;
-  const messageInvalid = submitted && !formData.message;
+  if (submitted) {
+    return (
+      <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <h2 className="font-sans text-2xl font-bold text-foreground mb-2">
+          Message envoyé
+        </h2>
+        <p className="text-slate-600">
+          Merci de nous avoir contactés. Nous reviendrons vers vous sous peu.
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <Card className="glass-card-enhanced rounded-3xl">
-      <CardHeader className="space-y-2">
-        <div className="flex items-center gap-3">
-          <MessageCircle className="w-6 h-6 text-accent" aria-hidden="true" />
-          <CardTitle className="text-2xl">Envoyez-nous un message</CardTitle>
-        </div>
-      </CardHeader>
-
-      <CardContent>
-        <form onSubmit={onSubmit} className="space-y-6" noValidate>
-          <input
-            type="text"
-            name="website"
-            value={formData.website}
-            onChange={(e) =>
-              setFormData((s) => ({ ...s, website: e.target.value }))
-            }
-            className="hidden"
-            tabIndex={-1}
-            autoComplete="off"
-            aria-hidden="true"
-          />
-
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="contact-name">Nom complet *</Label>
-              <Input
-                id="contact-name"
-                name="name"
-                value={formData.name}
-                onChange={onChange('name')}
-                autoComplete="name"
-                placeholder="Votre nom"
-                aria-invalid={nameInvalid || undefined}
-              />
-              {nameInvalid && (
-                <p className="text-sm text-destructive">
-                  Veuillez indiquer votre nom.
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="contact-email">Email *</Label>
-              <Input
-                id="contact-email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={onChange('email')}
-                autoComplete="email"
-                placeholder="vous@exemple.com"
-                aria-invalid={emailInvalid || undefined}
-              />
-              {emailInvalid && (
-                <p className="text-sm text-destructive">
-                  Veuillez indiquer un email valide.
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Sujet *</Label>
-            <Select value={formData.subject} onValueChange={onSubject}>
-              <SelectTrigger aria-invalid={subjectInvalid || undefined}>
-                <SelectValue placeholder="Choisissez un sujet" />
-              </SelectTrigger>
-              <SelectContent>
-                {contactSubjects.map((s) => (
-                  <SelectItem key={s.value} value={s.value}>
-                    {s.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {subjectInvalid && (
-              <p className="text-sm text-destructive">
-                Veuillez choisir un sujet.
-              </p>
-            )}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="contact-message">Message *</Label>
-            <Textarea
-              id="contact-message"
-              name="message"
-              value={formData.message}
-              onChange={onChange('message')}
-              rows={6}
-              className="resize-none"
-              placeholder="Décrivez votre demande en détail…"
-              aria-invalid={messageInvalid || undefined}
+    <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <h2 className="font-sans text-2xl font-bold text-foreground mb-6">
+        Envoyer un message
+      </h2>
+      <form onSubmit={onSubmit} className="space-y-5">
+        <div className="grid md:grid-cols-2 gap-5">
+          <div>
+            <Label htmlFor="name">Nom</Label>
+            <Input
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={onChange('name')}
+              placeholder="Votre nom"
+              autoComplete="name"
+              required
             />
-            {messageInvalid && (
-              <p className="text-sm text-destructive">
-                Veuillez écrire votre message.
-              </p>
-            )}
           </div>
+          <div>
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={onChange('email')}
+              placeholder="vous@exemple.com"
+              autoComplete="email"
+              required
+            />
+          </div>
+        </div>
 
-          <Button
-            type="submit"
-            variant="primary"
-            size="xl"
-            block
-            disabled={submitting}
-            aria-busy={submitting}
-          >
-            <Send className="w-4 h-4" aria-hidden="true" />
-            {submitting ? 'Envoi…' : 'Envoyer le message'}
+        <div>
+          <Label htmlFor="subject">Sujet</Label>
+          <Input
+            id="subject"
+            name="subject"
+            value={formData.subject}
+            onChange={onChange('subject')}
+            placeholder="Sujet de votre message"
+            required
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="message">Message</Label>
+          <Textarea
+            id="message"
+            name="message"
+            value={formData.message}
+            onChange={onChange('message')}
+            placeholder="Expliquez-nous comment nous pouvons vous aider"
+            rows={6}
+            required
+          />
+        </div>
+
+        <Input
+          id="website"
+          name="website"
+          value={formData.website}
+          onChange={onChange('website')}
+          className="hidden"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+
+        {error ? <p className="text-sm text-red-600">{error}</p> : null}
+
+        <div className="flex justify-end">
+          <Button type="submit" size="lg" disabled={loading}>
+            {loading ? 'Envoi…' : 'Envoyer'}
           </Button>
-        </form>
-      </CardContent>
-    </Card>
+        </div>
+      </form>
+    </div>
   );
 }
