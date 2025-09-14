@@ -1,38 +1,45 @@
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import { JsonLd } from '@/components/json-ld';
+import { absoluteUrl } from '@/lib/site';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title:
-    'Matelas en latex naturel 2024 : guide, labels et conseils | MatelasMatch',
+  title: 'Matelas latex naturel : respirabilité et soutien | MatelasMatch',
   description:
-    'Tout savoir sur les matelas en latex naturel : avantages, certifications (GOLS, Oeko-Tex), durabilité et conseils d’achat. Accédez au comparateur filtré.',
-  alternates: { canonical: '/categorie/matelas-latex-naturel' },
-  keywords: [
-    'matelas latex naturel',
-    'matelas écologique',
-    'latex GOLS',
-    'comparatif latex naturel',
-    'matelas durable',
-  ],
+    "Guide des matelas en latex naturel : points forts, densités et conseils d'achat. Accédez au comparateur pour filtrer selon vos besoins.",
+  alternates: { canonical: absoluteUrl('/categorie/matelas-latex-naturel') },
   openGraph: {
-    title: 'Matelas en latex naturel 2024 : guide complet',
-    description:
-      'Avantages, labels, procédés (Dunlop, Talalay) et liens vers le comparateur filtré.',
-    url: '/categorie/matelas-latex-naturel',
-    siteName: 'MatelasMatch',
-    images: [{ url: '/matelas-latex-naturel-bio-ferme.png' }],
-    locale: 'fr_FR',
     type: 'website',
+    url: absoluteUrl('/categorie/matelas-latex-naturel'),
+    title: 'Matelas latex naturel : comparatif et conseils',
+    description:
+      'Avantages du latex naturel, densités, aération et durabilité. Accès au comparateur filtré.',
+    images: [
+      {
+        url: absoluteUrl('/matelas-latex-naturel.png'),
+        width: 1200,
+        height: 630,
+        alt: 'Matelas latex naturel',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Matelas en latex naturel 2024 : guide complet',
-    description: 'Avantages, certifications et conseils + comparateur filtré.',
-    images: ['/matelas-latex-naturel-bio-ferme.png'],
+    title: 'Matelas latex naturel : comparatif et conseils',
+    description:
+      'Avantages du latex naturel, densités, aération et durabilité. Accès au comparateur filtré.',
+    images: [absoluteUrl('/matelas-latex-naturel.png')],
   },
+  robots: { index: true, follow: true },
+  keywords: [
+    'matelas latex naturel',
+    'respirabilité matelas',
+    'durabilité latex',
+    'comparatif matelas latex',
+    'guide achat matelas',
+  ],
 };
 
 export default function MatelasLatexNaturelPage() {

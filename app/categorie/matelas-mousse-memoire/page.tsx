@@ -1,37 +1,45 @@
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import { JsonLd } from '@/components/json-ld';
+import { absoluteUrl } from '@/lib/site';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Matelas en mousse à mémoire 2024 : guide et critères | MatelasMatch',
+  title: 'Matelas en mousse à mémoire : pression réduite | MatelasMatch',
   description:
-    'Avantages, densité, épaisseur, fermeté et thermorégulation des matelas mémoire de forme. Accédez au comparateur filtré par type.',
-  alternates: { canonical: '/categorie/matelas-mousse-memoire' },
-  keywords: [
-    'matelas mousse mémoire',
-    'mémoire de forme',
-    'comparatif mousse mémoire',
-    'meilleur matelas mémoire',
-    'densité matelas',
-  ],
+    "Guide des matelas en mousse mémoire : soulagement de la pression, maintien et conseils d'achat. Accédez au comparateur filtré.",
+  alternates: { canonical: absoluteUrl('/categorie/matelas-mousse-memoire') },
   openGraph: {
-    title: 'Matelas en mousse à mémoire 2024 : guide complet',
-    description:
-      'Soulagement des points de pression, indépendance de couchage et critères de choix. Comparateur inclus.',
-    url: '/categorie/matelas-mousse-memoire',
-    siteName: 'MatelasMatch',
-    images: [{ url: '/matelas-tempur-cloud-mousse-memoire.png' }],
-    locale: 'fr_FR',
     type: 'website',
+    url: absoluteUrl('/categorie/matelas-mousse-memoire'),
+    title: 'Matelas mousse mémoire : comparatif et conseils',
+    description:
+      'Points forts de la mousse mémoire, niveaux de fermeté et choix selon la morphologie. Accès au comparateur.',
+    images: [
+      {
+        url: absoluteUrl('/matelas-mousse-memoire.png'),
+        width: 1200,
+        height: 630,
+        alt: 'Matelas mousse mémoire',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Matelas en mousse à mémoire 2024 : guide complet',
-    description: 'Tout savoir sur la mémoire de forme + comparateur filtré.',
-    images: ['/matelas-tempur-cloud-mousse-memoire.png'],
+    title: 'Matelas mousse mémoire : comparatif et conseils',
+    description:
+      'Points forts de la mousse mémoire, niveaux de fermeté et choix selon la morphologie. Accès au comparateur.',
+    images: [absoluteUrl('/matelas-mousse-memoire.png')],
   },
+  robots: { index: true, follow: true },
+  keywords: [
+    'matelas mousse mémoire',
+    'soulagement pression',
+    'viscoélastique',
+    'comparatif matelas mousse',
+    'guide achat matelas',
+  ],
 };
 
 export default function MatelasMouseMemoirePage() {

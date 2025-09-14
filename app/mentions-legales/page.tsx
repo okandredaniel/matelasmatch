@@ -1,40 +1,33 @@
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import { JsonLd } from '@/components/json-ld';
+import { absoluteUrl } from '@/lib/site';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Mentions légales - MatelasMatch',
-  description:
-    'Mentions légales du site MatelasMatch.fr : informations sur l’éditeur, l’hébergeur, la propriété intellectuelle, l’affiliation et les conditions d’utilisation.',
-  alternates: { canonical: '/mentions-legales' },
-  keywords: [
-    'mentions légales',
-    'éditeur du site',
-    'hébergeur',
-    'conditions d’utilisation',
-    'propriété intellectuelle',
-    'affiliation Amazon',
-    'contact MatelasMatch',
-  ],
-  robots: { index: true, follow: true },
+  title: 'Mentions légales | MatelasMatch',
+  description: 'Informations légales et coordonnées de l’éditeur du site.',
+  alternates: { canonical: absoluteUrl('/mentions-legales') },
   openGraph: {
-    title: 'Mentions légales - MatelasMatch',
-    description:
-      'Informations légales de MatelasMatch.fr : éditeur, hébergeur, propriété intellectuelle et responsabilité.',
-    url: '/mentions-legales',
-    siteName: 'MatelasMatch',
-    images: [{ url: '/placeholder.jpg' }],
-    locale: 'fr_FR',
     type: 'website',
+    url: absoluteUrl('/mentions-legales'),
+    title: 'Mentions légales | MatelasMatch',
+    description: 'Informations légales et coordonnées de l’éditeur du site.',
+    images: [
+      {
+        url: absoluteUrl('/og-image.png'),
+        width: 1200,
+        height: 630,
+        alt: 'Mentions légales',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Mentions légales - MatelasMatch',
-    description:
-      'Informations légales de MatelasMatch.fr : éditeur, hébergeur, propriété intellectuelle et responsabilité.',
-    images: ['/placeholder.jpg'],
+    title: 'Mentions légales | MatelasMatch',
+    description: 'Informations légales et coordonnées de l’éditeur du site.',
+    images: [absoluteUrl('/og-image.png')],
   },
 };
 

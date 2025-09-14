@@ -2,39 +2,36 @@ import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import { JsonLd } from '@/components/json-ld';
 import { TestimonialsSection } from '@/components/testimonials-section';
+import { absoluteUrl } from '@/lib/site';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title:
-    'Avis clients matelas 2024 : retours d’expérience authentiques | MatelasMatch',
+  title: 'Avis clients | MatelasMatch',
   description:
-    'Lisez des avis vérifiés d’utilisateurs sur les matelas testés : notes, points forts/faibles et retours d’expérience pour mieux choisir.',
-  alternates: { canonical: '/avis' },
-  keywords: [
-    'avis matelas',
-    'avis clients matelas',
-    'tests matelas',
-    'retours d’expérience matelas',
-    'meilleur matelas avis',
-  ],
-  robots: { index: true, follow: true },
+    'Notes, retours et témoignages des utilisateurs sur les meilleurs matelas.',
+  alternates: { canonical: absoluteUrl('/avis-clients') },
   openGraph: {
-    title: 'Avis clients matelas : retours d’expérience authentiques',
-    description:
-      'Avis vérifiés, notes et témoignages pour vous aider à choisir le bon matelas.',
-    url: '/avis',
-    siteName: 'MatelasMatch',
-    images: [{ url: '/placeholder.jpg' }],
-    locale: 'fr_FR',
     type: 'website',
+    url: absoluteUrl('/avis-clients'),
+    title: 'Avis clients | MatelasMatch',
+    description:
+      'Notes, retours et témoignages des utilisateurs sur les meilleurs matelas.',
+    images: [
+      {
+        url: absoluteUrl('/og-image.png'),
+        width: 1200,
+        height: 630,
+        alt: 'Avis MatelasMatch',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Avis clients matelas : retours d’expérience authentiques',
+    title: 'Avis clients | MatelasMatch',
     description:
-      'Découvrez les avis vérifiés de vrais utilisateurs sur différents matelas.',
-    images: ['/placeholder.jpg'],
+      'Notes, retours et témoignages des utilisateurs sur les meilleurs matelas.',
+    images: [absoluteUrl('/og-image.png')],
   },
 };
 

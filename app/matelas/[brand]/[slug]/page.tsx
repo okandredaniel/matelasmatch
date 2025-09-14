@@ -17,11 +17,44 @@ import { StarRating } from '@/components/product/star-rating';
 import { TrustIcons } from '@/components/product/trust-icons';
 import { comfortLevels, mattressTypes } from '@/data/filters';
 import { mattresses } from '@/data/mattresses';
+import { absoluteUrl } from '@/lib/site';
 import { toBrandSlug, toProductSlug } from '@/lib/slug';
 import { ChevronRight } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { brand: string; slug: string };
+}): Promise<Metadata> {
+  const canonical = `/matelas/${params.brand}/${params.slug}`;
+  const url = absoluteUrl(canonical);
+  const image = absoluteUrl('/og-image.png');
+
+  return {
+    alternates: { canonical: url },
+    openGraph: {
+      type: 'website',
+      url,
+      siteName: 'MatelasMatch',
+      title: 'Matelas | MatelasMatch',
+      description:
+        'Fiche produit, caractéristiques, avis et marchands pour ce modèle.',
+      images: [
+        { url: image, width: 1200, height: 630, alt: 'Produit MatelasMatch' },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Matelas | MatelasMatch',
+      description:
+        'Fiche produit, caractéristiques, avis et marchands pour ce modèle.',
+      images: [image],
+    },
+  };
+}
 
 const typeMap = new Map(mattressTypes.map((o) => [o.value, o.label]));
 const comfortMap = new Map(comfortLevels.map((o) => [o.value, o.label]));
@@ -49,37 +82,6 @@ function findMattressByParams({ brand, slug }: PageParams) {
   if (found) return found;
   found = mattresses.find((m) => toProductSlug(m.name) === slugNorm);
   return found;
-}
-
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const m = findMattressByParams(params);
-  if (!m) return { title: 'Matelas non trouvé' };
-  const canonical = `/matelas/${toBrandSlug(
-    m.brand || params.brand
-  )}/${toProductSlug(m.name)}`;
-  const title = `${m.name} - Avis & Prix | MatelasMatch`;
-  const description = `Découvrez le ${m.name} : avis clients, prix, caractéristiques et où l'acheter au meilleur prix. ${m.rating}/5 avec ${m.reviews} avis.`;
-  const image = m.image ?? '/og-default.jpg';
-  return {
-    title,
-    description,
-    openGraph: {
-      type: 'website',
-      title,
-      description,
-      url: canonical,
-      images: [{ url: image, width: 1200, height: 630, alt: m.name }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [image],
-    },
-    alternates: { canonical },
-  };
 }
 
 export default function Page({ params }: PageProps) {

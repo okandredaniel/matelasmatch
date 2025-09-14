@@ -1,39 +1,36 @@
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import { JsonLd } from '@/components/json-ld';
+import { absoluteUrl } from '@/lib/site';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Politique de confidentialité - MatelasMatch',
+  title: 'Politique de confidentialité | MatelasMatch',
   description:
-    'Politique de confidentialité de MatelasMatch.fr : comment nous collectons, utilisons et protégeons vos données personnelles (RGPD).',
-  alternates: { canonical: '/politique-confidentialite' },
-  keywords: [
-    'politique de confidentialité',
-    'données personnelles',
-    'RGPD',
-    'cookies',
-    'protection des données',
-    'MatelasMatch',
-  ],
-  robots: { index: true, follow: true },
+    'Données collectées, finalités, base légale et droits des utilisateurs.',
+  alternates: { canonical: absoluteUrl('/politique-confidentialite') },
   openGraph: {
-    title: 'Politique de confidentialité - MatelasMatch',
-    description:
-      'Découvrez comment MatelasMatch.fr collecte, utilise et protège vos données personnelles conformément au RGPD.',
-    url: '/politique-confidentialite',
-    siteName: 'MatelasMatch',
-    images: [{ url: '/placeholder.jpg' }],
-    locale: 'fr_FR',
     type: 'website',
+    url: absoluteUrl('/politique-confidentialite'),
+    title: 'Politique de confidentialité | MatelasMatch',
+    description:
+      'Données collectées, finalités, base légale et droits des utilisateurs.',
+    images: [
+      {
+        url: absoluteUrl('/og-image.png'),
+        width: 1200,
+        height: 630,
+        alt: 'Politique de confidentialité',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Politique de confidentialité - MatelasMatch',
+    title: 'Politique de confidentialité | MatelasMatch',
     description:
-      'Comment MatelasMatch.fr traite vos données personnelles, vos droits RGPD et l’usage des cookies.',
-    images: ['/placeholder.jpg'],
+      'Données collectées, finalités, base légale et droits des utilisateurs.',
+    images: [absoluteUrl('/og-image.png')],
   },
 };
 

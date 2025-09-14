@@ -1,38 +1,47 @@
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import { JsonLd } from '@/components/json-ld';
+import { absoluteUrl } from '@/lib/site';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title:
-    'Matelas à ressorts ensachés 2024 : aération et soutien | MatelasMatch',
+  title: 'Matelas à ressorts ensachés : soutien et aération | MatelasMatch',
   description:
-    'Avantages, zones de confort, densité de ressorts et critères de choix. Découvrez les meilleurs matelas à ressorts ensachés et accédez au comparateur.',
-  alternates: { canonical: '/categorie/matelas-ressorts-ensaches' },
-  keywords: [
-    'matelas ressorts ensachés',
-    'matelas ressorts',
-    'comparatif ressorts ensachés',
-    'meilleur matelas ressorts',
-    'ventilation matelas',
-  ],
+    'Guide des matelas à ressorts ensachés : avantages, indépendance de couchage et ventilation. Accédez au comparateur.',
+  alternates: {
+    canonical: absoluteUrl('/categorie/matelas-ressorts-ensaches'),
+  },
   openGraph: {
-    title: 'Matelas à ressorts ensachés 2024 : guide et sélection',
-    description:
-      'Aération, indépendance de couchage et maintien adaptatif. Comparez facilement par type.',
-    url: '/categorie/matelas-ressorts-ensaches',
-    siteName: 'MatelasMatch',
-    images: [{ url: '/matelas-ressorts-bonnell-classic.jpg' }],
-    locale: 'fr_FR',
     type: 'website',
+    url: absoluteUrl('/categorie/matelas-ressorts-ensaches'),
+    title: 'Matelas ressorts ensachés : comparatif et conseils',
+    description:
+      'Indépendance de couchage, soutien précis et bonne aération. Accès au comparateur filtré.',
+    images: [
+      {
+        url: absoluteUrl('/matelas-ressorts-ensaches.png'),
+        width: 1200,
+        height: 630,
+        alt: 'Matelas ressorts ensachés',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Matelas à ressorts ensachés 2024 : guide et sélection',
-    description: 'Tout savoir sur les ressorts ensachés + comparateur filtré.',
-    images: ['/matelas-ressorts-bonnell-classic.jpg'],
+    title: 'Matelas ressorts ensachés : comparatif et conseils',
+    description:
+      'Indépendance de couchage, soutien précis et bonne aération. Accès au comparateur filtré.',
+    images: [absoluteUrl('/matelas-ressorts-ensaches.png')],
   },
+  robots: { index: true, follow: true },
+  keywords: [
+    'matelas ressorts ensachés',
+    'indépendance de couchage',
+    'aération matelas',
+    'comparatif matelas ressorts',
+    'guide achat matelas',
+  ],
 };
 
 export default function MatelasRessortsEnsachesPage() {

@@ -34,19 +34,21 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
-    url: 'https://www.matelasmatch.fr/',
+    url: '/',
     siteName: 'MatelasMatch',
     title: 'MatelasMatch – Comparateur de matelas',
     description:
       'Trouvez le matelas parfait grâce à des comparatifs clairs et des guides d’achat.',
-    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+    images: [
+      { url: '/og-image.png', width: 1200, height: 630, alt: 'MatelasMatch' },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'MatelasMatch – Comparateur de matelas',
     description:
       'Trouvez le matelas parfait grâce à des comparatifs clairs et des guides d’achat.',
-    images: ['/og-image.png'],
+    images: [{ url: '/og-image.png', alt: 'MatelasMatch' }],
   },
   robots: { index: true, follow: true },
   generator: 'v0.app',
@@ -72,7 +74,7 @@ export default function RootLayout({
         ].join(' ')}
       >
         <Suspense fallback={null}>
-          <main id="main" className="min-h-dvh">
+          <main id="main" role="main" className="min-h-dvh">
             {children}
           </main>
         </Suspense>

@@ -1,43 +1,47 @@
-// app/articles/[slug]/page.tsx
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import { Button } from '@/components/ui/button';
 import { articles } from '@/data/articles';
+import { absoluteUrl } from '@/lib/site';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const url = absoluteUrl(`/articles/${params.slug}`);
+  const image = absoluteUrl('/og-image.png');
+  return {
+    alternates: { canonical: url },
+    openGraph: {
+      type: 'article',
+      url,
+      title: 'Article | MatelasMatch',
+      description:
+        'Guides, conseils et comparatifs autour des matelas en France.',
+      images: [
+        { url: image, width: 1200, height: 630, alt: 'Article MatelasMatch' },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Article | MatelasMatch',
+      description:
+        'Guides, conseils et comparatifs autour des matelas en France.',
+      images: [image],
+    },
+  };
+}
+
 type Params = { slug: string };
 
 export function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }));
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Params;
-}): Promise<Metadata> {
-  const post = articles.find((a) => a.slug === params.slug);
-  if (!post) return {};
-  const title = post.title;
-  const description = post.excerpt || '';
-  const url = `https://www.matelasmatch.fr/articles/${post.slug}`;
-
-  return {
-    title,
-    description,
-    alternates: { canonical: url },
-    openGraph: {
-      title,
-      description,
-      url,
-      type: 'article',
-      images: post.image ? [{ url: post.image }] : undefined,
-    },
-  };
 }
 
 export default function Page({ params }: { params: Params }) {

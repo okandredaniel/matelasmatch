@@ -7,10 +7,38 @@ import { Header } from '@/components/header';
 import { PageHero } from '@/components/page-hero';
 import { articles } from '@/data/articles';
 import { filterContent, getCategories } from '@/hooks/use-content';
+import { absoluteUrl } from '@/lib/site';
 import type { Article } from '@/types/content';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
+
+export const metadata: Metadata = {
+  title: 'Articles | MatelasMatch',
+  description: 'Guides, conseils et analyses pour choisir votre matelas.',
+  alternates: { canonical: absoluteUrl('/articles') },
+  openGraph: {
+    type: 'website',
+    url: absoluteUrl('/articles'),
+    title: 'Articles | MatelasMatch',
+    description: 'Guides, conseils et analyses pour choisir votre matelas.',
+    images: [
+      {
+        url: absoluteUrl('/og-image.png'),
+        width: 1200,
+        height: 630,
+        alt: 'Articles MatelasMatch',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Articles | MatelasMatch',
+    description: 'Guides, conseils et analyses pour choisir votre matelas.',
+    images: [absoluteUrl('/og-image.png')],
+  },
+};
 
 const PAGE_SIZE = 9;
 

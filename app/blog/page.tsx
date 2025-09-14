@@ -8,8 +8,39 @@ import { Header } from '@/components/header';
 import { PageHero } from '@/components/page-hero';
 import { blogPosts } from '@/data/blogposts';
 import { filterContent, getCategories } from '@/hooks/use-content';
+import { absoluteUrl } from '@/lib/site';
 import type { BlogPost } from '@/types/content';
+import { Metadata } from 'next';
 import { useMemo, useState } from 'react';
+
+export const metadata: Metadata = {
+  title: 'Blog | MatelasMatch',
+  description:
+    "Guides d'achat, comparatifs et conseils pour choisir le bon matelas en France.",
+  alternates: { canonical: absoluteUrl('/blog') },
+  openGraph: {
+    type: 'website',
+    url: absoluteUrl('/blog'),
+    title: 'Blog | MatelasMatch',
+    description:
+      "Guides d'achat, comparatifs et conseils pour le choix de votre matelas.",
+    images: [
+      {
+        url: absoluteUrl('/og-image.png'),
+        width: 1200,
+        height: 630,
+        alt: 'Blog MatelasMatch',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog | MatelasMatch',
+    description:
+      "Guides d'achat, comparatifs et conseils pour le choix de votre matelas.",
+    images: [absoluteUrl('/og-image.png')],
+  },
+};
 
 export default function BlogPage() {
   const [search, setSearch] = useState('');

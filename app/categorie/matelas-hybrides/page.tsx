@@ -1,39 +1,45 @@
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import { JsonLd } from '@/components/json-ld';
+import { absoluteUrl } from '@/lib/site';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title:
-    'Matelas hybrides 2024 : comparatif, avantages et conseils | MatelasMatch',
+  title: 'Matelas hybrides : comparatif, avantages et conseils | MatelasMatch',
   description:
-    'Guide 2024 des matelas hybrides : avantages, composition, conseils de choix et liens vers notre comparateur filtré. Trouvez un matelas hybride adapté à votre profil.',
-  alternates: { canonical: '/categorie/matelas-hybrides' },
-  keywords: [
-    'matelas hybride',
-    'matelas ressorts et mousse',
-    'comparatif matelas hybride',
-    'meilleur matelas hybride',
-    'matelas ventilation',
-  ],
+    "Guide des matelas hybrides : avantages, composition, niveaux de fermeté et conseils d'achat. Accédez au comparateur filtré pour trouver votre modèle idéal.",
+  alternates: { canonical: absoluteUrl('/categorie/matelas-hybrides') },
   openGraph: {
-    title: 'Matelas hybrides 2024 : comparatif et conseils',
-    description:
-      'Tout savoir sur les matelas hybrides : soutien, confort, ventilation, durabilité. Accédez au comparateur filtré par type.',
-    url: '/categorie/matelas-hybrides',
-    siteName: 'MatelasMatch',
-    images: [{ url: '/matelas-hybride-premium-ressorts-mousse.png' }],
-    locale: 'fr_FR',
     type: 'website',
+    url: absoluteUrl('/categorie/matelas-hybrides'),
+    title: 'Matelas hybrides : comparatif et conseils',
+    description:
+      'Guide complet des matelas hybrides + accès au comparateur filtré pour trouver le bon modèle.',
+    images: [
+      {
+        url: absoluteUrl('/matelas-hybride-premium-ressorts-mousse.png'),
+        width: 1200,
+        height: 630,
+        alt: 'Matelas hybride',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Matelas hybrides 2024 : comparatif et conseils',
+    title: 'Matelas hybrides : comparatif et conseils',
     description:
-      'Guide complet des matelas hybrides + accès au comparateur filtré.',
-    images: ['/matelas-hybride-premium-ressorts-mousse.png'],
+      'Guide complet des matelas hybrides + accès au comparateur filtré pour trouver le bon modèle.',
+    images: [absoluteUrl('/matelas-hybride-premium-ressorts-mousse.png')],
   },
+  robots: { index: true, follow: true },
+  keywords: [
+    'matelas hybride',
+    'ressorts ensachés',
+    'mousse mémoire',
+    'comparatif matelas hybride',
+    'guide achat matelas',
+  ],
 };
 
 export default function MatelasHybridesPage() {
