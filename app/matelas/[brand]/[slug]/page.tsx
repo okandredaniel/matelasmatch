@@ -18,7 +18,9 @@ import { TrustIcons } from '@/components/product/trust-icons';
 import { comfortLevels, mattressTypes } from '@/data/filters';
 import { mattresses } from '@/data/mattresses';
 import { toBrandSlug, toProductSlug } from '@/lib/slug';
+import { ChevronRight } from 'lucide-react';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 
 const typeMap = new Map(mattressTypes.map((o) => [o.value, o.label]));
@@ -205,19 +207,22 @@ export default function Page({ params }: PageProps) {
           <MerchantLinks mattress={m} />
         </Section>
 
-        <Section>
-          <div className="mt-8 flex flex-wrap items-center gap-2">
-            <span className="text-sm text-slate-600">Voir d’autres</span>
-            <a
-              href={`/comparateur?type=${encodeURIComponent(m.type)}`}
-              className="text-sm font-medium text-accent underline underline-offset-4"
+        <Section
+          title="Produits similaires"
+          actions={
+            <Link
+              href={{ pathname: '/comparateur', query: { type: m.type } }}
+              prefetch={false}
+              aria-label={`Voir d’autres matelas ${
+                typeLabel?.toLowerCase() || ''
+              }`}
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-3 py-2 text-sm font-medium text-slate-900 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500"
             >
-              matelas {typeLabel?.toLowerCase()}
-            </a>
-          </div>
-        </Section>
-
-        <Section title="Produits similaires">
+              Voir d’autres matelas {typeLabel?.toLowerCase()}
+              <ChevronRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          }
+        >
           <RelatedProducts currentId={m.id} type={m.type} />
         </Section>
       </main>
