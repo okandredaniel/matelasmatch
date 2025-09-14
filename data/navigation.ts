@@ -32,9 +32,9 @@ export const footerSections: NavSection[] = [
     title: 'Ressources',
     links: [
       { href: '/blog', label: 'Blog' },
-      { href: '/guide-achat', label: 'Guide d’achat' },
-      { href: '/comparatif', label: 'Comparatifs' },
-      { href: '/avis', label: 'Avis clients' },
+      { href: '/articles', label: 'Articles & guides' },
+      { href: '/blog?c=Comparatif', label: 'Comparatifs' },
+      { href: '/avis-clients', label: 'Avis clients' },
     ],
   },
   {
