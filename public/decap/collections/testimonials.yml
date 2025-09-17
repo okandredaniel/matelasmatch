@@ -1,0 +1,32 @@
+collections:
+  - name: testimonials
+    label: Depoimentos
+    folder: content/testimonials
+    create: true
+    identifier_field: name
+    slug: '{{slug}}'
+    format: json
+    extension: json
+    fields:
+      - { name: name, label: Nome, widget: string, required: true }
+      - { name: initials, label: Iniciais, widget: string, required: false }
+      - { name: location, label: Localização, widget: string, required: false }
+      - name: rating
+        label: Avaliação
+        widget: number
+        min: 0
+        max: 5
+        step: 0.1
+        required: true
+      - { name: text, label: Texto, widget: text, required: true }
+      - { name: gradient, label: Gradiente, widget: string, required: false }
+      - name: mattress
+        label: Colchão
+        widget: relation
+        collection: mattresses
+        search_fields: [name]
+        value_field: name
+        display_fields: [name]
+        required: false
+      - { name: avatar, label: Avatar, widget: image, required: false }
+      - { name: date, label: Data, widget: datetime, required: false }

@@ -45,11 +45,37 @@
         const base = await loadYml(
           isDev ? '/decap/base.dev.yml' : '/decap/base.prod.yml'
         );
-        const brands = await loadYml('/decap/collections/brands.yml');
-        const mattresses = await loadYml('/decap/collections/mattresses.yml');
+        const [
+          brands,
+          mattresses,
+          faqCategories,
+          faqs,
+          testimonials,
+          blog,
+          articles,
+          pages,
+          settings,
+        ] = await Promise.all([
+          loadYml('/decap/collections/brands.yml'),
+          loadYml('/decap/collections/mattresses.yml'),
+          loadYml('/decap/collections/faq-categories.yml'),
+          loadYml('/decap/collections/faqs.yml'),
+          loadYml('/decap/collections/testimonials.yml'),
+          loadYml('/decap/collections/blog.yml'),
+          loadYml('/decap/collections/articles.yml'),
+          loadYml('/decap/collections/pages.yml'),
+          loadYml('/decap/collections/settings.yml'),
+        ]);
         const collections = [
           ...(brands.collections || []),
           ...(mattresses.collections || []),
+          ...(faqCategories.collections || []),
+          ...(faqs.collections || []),
+          ...(testimonials.collections || []),
+          ...(blog.collections || []),
+          ...(articles.collections || []),
+          ...(pages.collections || []),
+          ...(settings.collections || []),
         ];
         CMS.init({ load_config_file: false, config: { ...base, collections } });
       });

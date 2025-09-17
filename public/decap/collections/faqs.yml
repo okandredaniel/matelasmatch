@@ -1,0 +1,20 @@
+collections:
+  - name: faqs
+    label: FAQs
+    folder: content/faqs
+    create: true
+    identifier_field: question
+    slug: '{{slug}}'
+    format: json
+    extension: json
+    fields:
+      - { name: question, label: Pergunta, widget: string, required: true }
+      - { name: answer, label: Resposta, widget: markdown, required: true }
+      - name: category
+        label: Categoria
+        widget: relation
+        collection: faqCategories
+        search_fields: [title, slug]
+        value_field: slug
+        display_fields: [title]
+        required: false

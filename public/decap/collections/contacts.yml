@@ -1,0 +1,60 @@
+collections:
+  - name: contacts
+    label: Contatos
+    folder: content/contacts
+    create: true
+    identifier_field: slug
+    slug: '{{fields.slug}}'
+    format: json
+    extension: json
+    fields:
+      - name: id
+        label: ID
+        widget: number
+        required: true
+        min: 1
+      - name: name
+        label: Nome
+        widget: string
+        required: true
+      - name: email
+        label: E-mail
+        widget: string
+        required: true
+        pattern:
+          - '^[^@\s]+@[^@\s]+\.[^@\s]+$'
+          - E-mail inválido
+      - name: phone
+        label: Telefone
+        widget: string
+        required: false
+      - name: subject
+        label: Assunto
+        widget: string
+        required: false
+      - name: message
+        label: Mensagem
+        widget: text
+        required: true
+      - name: consent
+        label: Consentimento
+        widget: boolean
+        required: true
+        default: false
+      - name: slug
+        label: Slug
+        widget: string
+        required: true
+        pattern:
+          - '^[a-z0-9]+(?:-[a-z0-9]+)*$'
+          - Use apenas minúsculas, números e hífens
+      - name: createdAt
+        label: Criado em
+        widget: datetime
+        required: false
+        default: true
+      - name: updatedAt
+        label: Atualizado em
+        widget: datetime
+        required: false
+        default: true

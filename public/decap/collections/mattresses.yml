@@ -3,41 +3,68 @@ collections:
     label: Colchões
     folder: content/mattresses
     create: true
-    identifier_field: slug
-    slug: '{{fields.slug}}'
+    identifier_field: name
+    slug: '{{fields.brand}}-{{slug}}'
     format: json
     extension: json
     fields:
-      - { name: id, label: ID, widget: number }
+      - name: id
+        label: ID
+        widget: number
+        required: true
+        min: 1
       - name: brand
         label: Marca
         widget: relation
         collection: brands
-        search_fields: [title]
-        value_field: title
-        display_fields: [title]
-      - { name: name, label: Nome do produto, widget: string }
-      - { name: slug, label: Slug, widget: string }
-      - { name: type, label: Tipo, widget: string }
-      - { name: comfort, label: Conforto, widget: string, required: false }
-      - { name: firmness, label: Firmeza, widget: string, required: false }
-      - { name: price, label: Preço, widget: string }
-      - {
-          name: originalPrice,
-          label: Preço original,
-          widget: string,
-          required: false,
-        }
-      - {
-          name: rating,
-          label: Avaliação,
-          widget: number,
-          min: 0,
-          max: 5,
-          step: 0.1,
-        }
-      - { name: reviews, label: Nº de avaliações, widget: number }
-      - { name: image, label: Imagem principal, widget: image, required: false }
+        search_fields: [name, slug]
+        value_field: slug
+        display_fields: [name]
+        required: true
+      - name: name
+        label: Nome do produto
+        widget: string
+        required: true
+      - name: type
+        label: Tipo
+        widget: string
+        required: true
+      - name: comfort
+        label: Conforto
+        widget: string
+        required: false
+      - name: firmness
+        label: Firmeza
+        widget: string
+        required: false
+      - name: price
+        label: Preço
+        widget: number
+        value_type: float
+        min: 0
+        required: true
+      - name: originalPrice
+        label: Preço original
+        widget: number
+        value_type: float
+        min: 0
+        required: false
+      - name: rating
+        label: Avaliação
+        widget: number
+        min: 0
+        max: 5
+        step: 0.1
+        required: true
+      - name: reviews
+        label: Nº de avaliações
+        widget: number
+        min: 0
+        required: true
+      - name: image
+        label: Imagem principal
+        widget: image
+        required: false
       - name: images
         label: Galeria de imagens
         widget: list
@@ -53,78 +80,120 @@ collections:
         widget: list
         required: false
         field: { name: item, label: Item, widget: string }
-      - { name: badge, label: Selo, widget: string, required: false }
-      - { name: amazonLink, label: Link Amazon, widget: string }
-      - { name: asin, label: ASIN, widget: string, required: false }
-      - {
-          name: thicknessCm,
-          label: Espessura (cm),
-          widget: number,
-          required: false,
-        }
-      - {
-          name: warrantyYears,
-          label: Garantia (anos),
-          widget: number,
-          required: false,
-        }
-      - {
-          name: trialNights,
-          label: Teste (noites),
-          widget: number,
-          required: false,
-        }
+      - name: badge
+        label: Selo
+        widget: string
+        required: false
+      - name: amazonLink
+        label: Link Amazon
+        widget: string
+        required: false
+        pattern: ['^https?://', 'url inválida']
+      - name: asin
+        label: ASIN
+        widget: string
+        required: false
+        pattern:
+          - '^[A-Z0-9]{10}$'
+          - ASIN inválido
+      - name: thicknessCm
+        label: Espessura (cm)
+        widget: number
+        min: 0
+        required: false
+      - name: warrantyYears
+        label: Garantia (anos)
+        widget: number
+        min: 0
+        required: false
+      - name: trialNights
+        label: Teste (noites)
+        widget: number
+        min: 0
+        required: false
       - name: materials
         label: Materiais
-        widget: list
+        widget: select
+        multiple: true
         required: false
-        field: { name: item, label: Item, widget: string }
+        options:
+          - Espuma
+          - Memória de forma
+          - Látex
+          - Molas ensacadas
+          - Espuma HR
+          - Gel
+          - Algodão
+          - Lã
+          - Bambu
       - name: certifications
         label: Certificações
-        widget: list
+        widget: select
+        multiple: true
         required: false
-        field: { name: item, label: Item, widget: string }
+        options:
+          - OEKO-TEX Standard 100
+          - CertiPUR
+          - Europur
+          - ISO 9001
       - name: sizes
         label: Tamanhos
-        widget: list
+        widget: select
+        multiple: true
         required: false
-        field: { name: item, label: Item, widget: string }
-      - {
-          name: countryOfOrigin,
-          label: País de origem,
-          widget: string,
-          required: false,
-        }
-      - {
-          name: edgeSupport,
-          label: Suporte de borda,
-          widget: string,
-          required: false,
-        }
-      - {
-          name: motionIsolation,
-          label: Isolamento de movimento,
-          widget: string,
-          required: false,
-        }
-      - { name: cooling, label: Resfriamento, widget: string, required: false }
+        options:
+          - 90x190
+          - 140x190
+          - 160x200
+          - 180x200
+      - name: countryOfOrigin
+        label: País de origem
+        widget: select
+        required: false
+        options:
+          - França
+          - Espanha
+          - Portugal
+          - Alemanha
+          - Itália
+          - Reino Unido
+          - Irlanda
+          - Bélgica
+          - Países Baixos
+      - name: edgeSupport
+        label: Suporte de borda
+        widget: string
+        required: false
+      - name: motionIsolation
+        label: Isolamento de movimento
+        widget: string
+        required: false
+      - name: cooling
+        label: Resfriamento
+        widget: string
+        required: false
       - name: bestFor
         label: Melhor para
-        widget: list
+        widget: select
+        multiple: true
         required: false
-        field: { name: item, label: Item, widget: string }
-      - {
-          name: weightSupportKg,
-          label: Suporte de peso (kg),
-          widget: number,
-          required: false,
-        }
-      - {
-          name: descriptionHtml,
-          label: Descrição (HTML),
-          widget: text,
-          required: false,
-        }
+        options:
+          - Dormir de lado
+          - Dormir de costas
+          - Dormir de barriga
+          - Casais
+          - Dores lombares
+          - Pessoas pesadas
+          - Quem sente calor
+      - name: weightSupportKg
+        label: Suporte de peso (kg)
+        widget: number
+        min: 0
+        required: false
+      - name: descriptionHtml
+        label: Descrição (HTML)
+        widget: text
+        required: false
       - name: pros
         label: Prós
         widget: list
@@ -135,23 +204,35 @@ collections:
         widget: list
         required: false
         field: { name: item, label: Item, widget: string }
-      - {
-          name: trustpilotUrl,
-          label: URL Trustpilot,
-          widget: string,
-          required: false,
-        }
-      - { name: brandUrl, label: URL da marca, widget: string, required: false }
+      - name: trustpilotUrl
+        label: URL Trustpilot
+        widget: string
+        required: false
+        pattern: ['^https?://', 'url inválida']
+      - name: brandUrl
+        label: URL da marca
+        widget: string
+        required: false
+        pattern: ['^https?://', 'url inválida']
       - name: brandTrust
         label: Confiança da marca
         widget: object
         required: false
         fields:
-          - { name: rating, label: Avaliação, widget: number, required: false }
+          - {
+              name: rating,
+              label: Avaliação,
+              widget: number,
+              min: 0,
+              max: 5,
+              step: 0.1,
+              required: false,
+            }
           - {
               name: reviews,
               label: Nº de avaliações,
               widget: number,
+              min: 0,
               required: false,
             }
           - name: source
@@ -162,12 +243,23 @@ collections:
               - { label: Trustpilot, value: trustpilot }
               - { label: Google, value: google }
               - { label: Site, value: site }
-          - { name: url, label: URL da fonte, widget: string, required: false }
+          - {
+              name: url,
+              label: URL da fonte,
+              widget: string,
+              required: false,
+              pattern: ['^https?://', 'url inválida'],
+            }
       - name: merchants
         label: Lojas/Comerciantes
         widget: list
         required: false
         fields:
           - { name: name, label: Nome, widget: string }
-          - { name: url, label: URL, widget: string }
+          - {
+              name: url,
+              label: URL,
+              widget: string,
+              pattern: ['^https?://', 'url inválida'],
+            }
           - { name: label, label: Rótulo, widget: string, required: false }

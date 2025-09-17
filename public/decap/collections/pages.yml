@@ -1,0 +1,56 @@
+collections:
+  - name: pages
+    label: Páginas
+    folder: content/pages
+    create: true
+    identifier_field: slug
+    slug: '{{fields.slug}}'
+    format: json
+    extension: json
+    fields:
+      - name: title
+        label: Título
+        widget: string
+        required: true
+      - name: slug
+        label: Slug
+        widget: string
+        required: true
+        pattern:
+          - '^[a-z0-9]+(?:-[a-z0-9]+)*$'
+          - Use apenas minúsculas, números e hífens
+      - name: excerpt
+        label: Resumo
+        widget: text
+        required: false
+      - name: body
+        label: Conteúdo
+        widget: markdown
+        required: true
+      - name: seo
+        label: SEO
+        widget: object
+        required: false
+        fields:
+          - name: metaTitle
+            label: Meta Title
+            widget: string
+            required: false
+          - name: metaDescription
+            label: Meta Description
+            widget: text
+            required: false
+          - name: ogImage
+            label: OG Image
+            widget: image
+            required: false
+      - name: createdAt
+        label: Criado em
+        widget: datetime
+        required: false
+        default: true
+      - name: updatedAt
+        label: Atualizado em
+        widget: datetime
+        required: false
+        default: true

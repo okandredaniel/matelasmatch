@@ -1,0 +1,37 @@
+collections:
+  - name: blog
+    label: Blog
+    folder: content/blog
+    create: true
+    identifier_field: title
+    slug: '{{slug}}'
+    format: json
+    extension: json
+    fields:
+      - { name: title, label: Título, widget: string, required: true }
+      - { name: excerpt, label: Resumo, widget: text, required: true }
+      - { name: date, label: Data, widget: datetime, required: true }
+      - { name: image, label: Imagem, widget: image, required: false }
+      - name: category
+        label: Categoria
+        widget: select
+        required: false
+        options:
+          - Comparativos
+          - Guia
+          - Notícias
+          - Opinião
+      - { name: author, label: Autor, widget: string, required: true }
+      - name: tags
+        label: Tags
+        widget: list
+        required: false
+        field: { name: item, label: Tag, widget: string }
+      - {
+          name: readTime,
+          label: Tempo de leitura (min),
+          widget: number,
+          min: 0,
+          required: false,
+        }
+      - { name: contentHtml, label: Conteúdo, widget: markdown, required: true }
