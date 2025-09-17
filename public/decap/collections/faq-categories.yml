@@ -7,12 +7,16 @@ collections:
     slug: '{{fields.slug}}'
     format: json
     extension: json
+    i18n: true
     fields:
-      - { name: title, label: Título, widget: string, required: true }
+      - name: title
+        label: Título
+        widget: string
+        required: true
+        i18n: true
       - name: slug
         label: Slug
         widget: string
         required: true
-        pattern:
-          - '^[a-z0-9]+(?:-[a-z0-9]+)*$'
-          - slug inválido
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'slug inválido']
+        i18n: false

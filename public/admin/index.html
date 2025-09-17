@@ -77,7 +77,10 @@
           ...(pages.collections || []),
           ...(settings.collections || []),
         ];
-        CMS.init({ load_config_file: false, config: { ...base, collections } });
+        CMS.init({
+          load_config_file: false,
+          config: { ...base, collections, locale: 'pt' },
+        });
       });
     </script>
   </body>

@@ -7,9 +7,18 @@ collections:
     slug: '{{slug}}'
     format: json
     extension: json
+    i18n: true
     fields:
-      - { name: question, label: Pergunta, widget: string, required: true }
-      - { name: answer, label: Resposta, widget: markdown, required: true }
+      - name: question
+        label: Pergunta
+        widget: string
+        required: true
+        i18n: true
+      - name: answer
+        label: Resposta
+        widget: markdown
+        required: true
+        i18n: true
       - name: category
         label: Categoria
         widget: relation
@@ -18,3 +27,4 @@ collections:
         value_field: slug
         display_fields: [title]
         required: false
+        i18n: false

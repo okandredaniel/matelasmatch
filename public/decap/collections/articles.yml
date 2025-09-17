@@ -7,38 +7,64 @@ collections:
     slug: '{{slug}}'
     format: json
     extension: json
+    i18n: true
     fields:
-      - { name: title, label: Título, widget: string, required: true }
-      - { name: excerpt, label: Resumo, widget: text, required: true }
-      - { name: date, label: Data, widget: datetime, required: true }
-      - { name: image, label: Imagem, widget: image, required: false }
+      - name: title
+        label: Título
+        widget: string
+        required: true
+        i18n: true
+      - name: excerpt
+        label: Resumo
+        widget: text
+        required: true
+        i18n: true
+      - name: date
+        label: Data
+        widget: datetime
+        required: true
+        i18n: false
+      - name: image
+        label: Imagem
+        widget: image
+        required: false
+        i18n: false
       - name: category
         label: Categoria
         widget: select
         required: false
+        i18n: false
         options:
-          - Guia
-          - Análise
-          - Dicas
+          - { label: Guia, value: guide }
+          - { label: Análise, value: analyse }
+          - { label: Dicas, value: conseils }
       - name: tags
         label: Tags
         widget: list
         required: false
-        field: { name: item, label: Tag, widget: string }
-      - {
-          name: readTime,
-          label: Tempo de leitura (min),
-          widget: number,
-          min: 0,
-          required: false,
-        }
+        i18n: true
+        field:
+          name: item
+          label: Tag
+          widget: string
       - name: relatedMattresses
         label: Colchões relacionados
         widget: relation
         multiple: true
         required: false
+        i18n: false
         collection: mattresses
         search_fields: [name]
         value_field: name
         display_fields: [name]
-      - { name: contentHtml, label: Conteúdo, widget: markdown, required: true }
+      - name: readTime
+        label: Tempo de leitura (min)
+        widget: number
+        min: 0
+        required: false
+        i18n: false
+      - name: contentHtml
+        label: Conteúdo
+        widget: markdown
+        required: true
+        i18n: true

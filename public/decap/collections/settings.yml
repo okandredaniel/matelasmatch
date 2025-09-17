@@ -2,66 +2,96 @@ collections:
   - name: settings
     label: Configurações
     format: json
+    i18n:
+      structure: single_file
     files:
       - name: site
         label: Site
         file: content/settings/site.json
+        i18n: true
         fields:
-          - { name: name, label: Nome do site, widget: string, required: true }
-          - {
-              name: url,
-              label: URL do site,
-              widget: string,
-              required: true,
-              pattern: ['^https?://', 'url inválida'],
-            }
-          - { name: email, label: E-mail, widget: string, required: false }
-          - { name: city, label: Cidade, widget: string, required: false }
+          - name: name
+            label: Nome do site
+            widget: string
+            required: true
+            i18n: true
+          - name: url
+            label: URL do site
+            widget: string
+            required: true
+            pattern: ['^https?://', 'url inválida']
+            i18n: false
+          - name: email
+            label: E-mail
+            widget: string
+            required: false
+            i18n: false
+          - name: city
+            label: Cidade
+            widget: string
+            required: false
+            i18n: true
           - name: countryCode
             label: Código do país
             widget: select
             required: false
+            i18n: false
             options: [FR, ES, PT, DE, IT, GB, IE, BE, NL]
           - name: social
             label: Social
             widget: list
             required: false
+            i18n: false
             fields:
-              - { name: name, label: Nome, widget: string }
-              - {
-                  name: url,
-                  label: URL,
-                  widget: string,
-                  pattern: ['^https?://', 'url inválida'],
-                }
+              - name: name
+                label: Nome
+                widget: string
+                i18n: false
+              - name: url
+                label: URL
+                widget: string
+                pattern: ['^https?://', 'url inválida']
+                i18n: false
           - name: nav
             label: Navegação
             widget: list
             required: false
+            i18n: true
             fields:
-              - { name: title, label: Título, widget: string }
+              - name: title
+                label: Título
+                widget: string
+                i18n: true
               - name: links
                 label: Links
                 widget: list
+                i18n: true
                 fields:
-                  - { name: href, label: Href, widget: string }
-                  - { name: label, label: Rótulo, widget: string }
-                  - {
-                      name: external,
-                      label: Externo,
-                      widget: boolean,
-                      required: false,
-                    }
-                  - { name: rel, label: Rel, widget: string, required: false }
-          - {
-              name: footerText,
-              label: Texto do rodapé,
-              widget: text,
-              required: false,
-            }
-          - {
-              name: defaultMetaImage,
-              label: Imagem padrão OG,
-              widget: image,
-              required: false,
-            }
+                  - name: href
+                    label: Href
+                    widget: string
+                    i18n: false
+                  - name: label
+                    label: Rótulo
+                    widget: string
+                    i18n: true
+                  - name: external
+                    label: Externo
+                    widget: boolean
+                    required: false
+                    i18n: false
+                  - name: rel
+                    label: Rel
+                    widget: string
+                    required: false
+                    i18n: false
+          - name: footerText
+            label: Texto do rodapé
+            widget: text
+            required: false
+            i18n: true
+          - name: defaultMetaImage
+            label: Imagem padrão OG
+            widget: image
+            required: false
+            i18n: false

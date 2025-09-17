@@ -7,50 +7,47 @@ collections:
     slug: '{{fields.slug}}'
     format: json
     extension: json
+    i18n: true
     fields:
       - name: title
         label: Título
         widget: string
         required: true
+        i18n: true
       - name: slug
         label: Slug
         widget: string
         required: true
-        pattern:
-          - '^[a-z0-9]+(?:-[a-z0-9]+)*$'
-          - Use apenas minúsculas, números e hífens
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'slug inválido']
+        i18n: false
       - name: excerpt
         label: Resumo
         widget: text
         required: false
+        i18n: true
       - name: body
         label: Conteúdo
         widget: markdown
         required: true
+        i18n: true
       - name: seo
         label: SEO
         widget: object
         required: false
+        i18n: false
         fields:
           - name: metaTitle
             label: Meta Title
             widget: string
             required: false
+            i18n: true
           - name: metaDescription
             label: Meta Description
             widget: text
             required: false
+            i18n: true
           - name: ogImage
             label: OG Image
             widget: image
             required: false
-      - name: createdAt
-        label: Criado em
-        widget: datetime
-        required: false
-        default: true
-      - name: updatedAt
-        label: Atualizado em
-        widget: datetime
-        required: false
-        default: true
+            i18n: false

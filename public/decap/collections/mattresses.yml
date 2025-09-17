@@ -7,12 +7,14 @@ collections:
     slug: '{{fields.brand}}-{{slug}}'
     format: json
     extension: json
+    i18n: true
     fields:
       - name: id
         label: ID
         widget: number
         required: true
         min: 1
+        i18n: false
       - name: brand
         label: Marca
         widget: relation
@@ -21,34 +23,41 @@ collections:
         value_field: slug
         display_fields: [name]
         required: true
+        i18n: false
       - name: name
         label: Nome do produto
         widget: string
         required: true
+        i18n: true
       - name: type
         label: Tipo
         widget: string
         required: true
+        i18n: true
       - name: comfort
         label: Conforto
         widget: string
         required: false
+        i18n: true
       - name: firmness
         label: Firmeza
         widget: string
         required: false
+        i18n: true
       - name: price
         label: Preço
         widget: number
         value_type: float
         min: 0
         required: true
+        i18n: false
       - name: originalPrice
         label: Preço original
         widget: number
         value_type: float
         min: 0
         required: false
+        i18n: false
       - name: rating
         label: Avaliação
         widget: number
@@ -56,210 +65,255 @@ collections:
         max: 5
         step: 0.1
         required: true
+        i18n: false
       - name: reviews
         label: Nº de avaliações
         widget: number
         min: 0
         required: true
+        i18n: false
       - name: image
         label: Imagem principal
         widget: image
         required: false
+        i18n: false
       - name: images
         label: Galeria de imagens
         widget: list
         required: false
-        field: { name: item, label: Imagem, widget: image }
+        i18n: false
+        field:
+          name: item
+          label: Imagem
+          widget: image
       - name: benefits
         label: Benefícios
         widget: list
         required: false
-        field: { name: item, label: Item, widget: string }
+        i18n: true
+        field:
+          name: item
+          label: Item
+          widget: string
       - name: features
         label: Características
         widget: list
         required: false
-        field: { name: item, label: Item, widget: string }
+        i18n: true
+        field:
+          name: item
+          label: Item
+          widget: string
       - name: badge
         label: Selo
         widget: string
         required: false
+        i18n: true
       - name: amazonLink
         label: Link Amazon
         widget: string
         required: false
         pattern: ['^https?://', 'url inválida']
+        i18n: false
       - name: asin
         label: ASIN
         widget: string
         required: false
-        pattern:
-          - '^[A-Z0-9]{10}$'
-          - ASIN inválido
+        pattern: ['^[A-Z0-9]{10}$', 'ASIN inválido']
+        i18n: false
       - name: thicknessCm
         label: Espessura (cm)
         widget: number
         min: 0
         required: false
+        i18n: false
       - name: warrantyYears
         label: Garantia (anos)
         widget: number
         min: 0
         required: false
+        i18n: false
       - name: trialNights
         label: Teste (noites)
         widget: number
         min: 0
         required: false
+        i18n: false
       - name: materials
         label: Materiais
         widget: select
         multiple: true
         required: false
+        i18n: false
         options:
-          - Espuma
-          - Memória de forma
-          - Látex
-          - Molas ensacadas
-          - Espuma HR
-          - Gel
-          - Algodão
-          - Lã
-          - Bambu
+          - { label: Espuma, value: foam }
+          - { label: Memória de forma, value: memory_foam }
+          - { label: Látex, value: latex }
+          - { label: Molas ensacadas, value: pocket_springs }
+          - { label: Espuma HR, value: hr_foam }
+          - { label: Gel, value: gel }
+          - { label: Algodão, value: cotton }
+          - { label: Lã, value: wool }
+          - { label: Bambu, value: bamboo }
       - name: certifications
         label: Certificações
         widget: select
         multiple: true
         required: false
+        i18n: false
         options:
-          - OEKO-TEX Standard 100
-          - CertiPUR
-          - Europur
-          - ISO 9001
+          - { label: OEKO-TEX Standard 100, value: oeko_tex_100 }
+          - { label: CertiPUR, value: certipur }
+          - { label: Europur, value: europur }
+          - { label: ISO 9001, value: iso_9001 }
       - name: sizes
         label: Tamanhos
         widget: select
         multiple: true
         required: false
+        i18n: false
         options:
-          - 90x190
-          - 140x190
-          - 160x200
-          - 180x200
+          - { label: 90x190, value: 90x190 }
+          - { label: 140x190, value: 140x190 }
+          - { label: 160x200, value: 160x200 }
+          - { label: 180x200, value: 180x200 }
       - name: countryOfOrigin
         label: País de origem
         widget: select
         required: false
+        i18n: false
         options:
-          - França
-          - Espanha
-          - Portugal
-          - Alemanha
-          - Itália
-          - Reino Unido
-          - Irlanda
-          - Bélgica
-          - Países Baixos
+          - { label: França, value: fr }
+          - { label: Espanha, value: es }
+          - { label: Portugal, value: pt }
+          - { label: Alemanha, value: de }
+          - { label: Itália, value: it }
+          - { label: Reino Unido, value: gb }
+          - { label: Irlanda, value: ie }
+          - { label: Bélgica, value: be }
+          - { label: Países Baixos, value: nl }
       - name: edgeSupport
         label: Suporte de borda
         widget: string
         required: false
+        i18n: true
       - name: motionIsolation
         label: Isolamento de movimento
         widget: string
         required: false
+        i18n: true
       - name: cooling
         label: Resfriamento
         widget: string
         required: false
+        i18n: true
       - name: bestFor
         label: Melhor para
         widget: select
         multiple: true
         required: false
+        i18n: false
         options:
-          - Dormir de lado
-          - Dormir de costas
-          - Dormir de barriga
-          - Casais
-          - Dores lombares
-          - Pessoas pesadas
-          - Quem sente calor
+          - { label: Dormir de lado, value: side_sleepers }
+          - { label: Dormir de costas, value: back_sleepers }
+          - { label: Dormir de barriga, value: stomach_sleepers }
+          - { label: Casais, value: couples }
+          - { label: Dores lombares, value: lower_back_pain }
+          - { label: Pessoas pesadas, value: heavy_people }
+          - { label: Quem sente calor, value: hot_sleepers }
       - name: weightSupportKg
         label: Suporte de peso (kg)
         widget: number
         min: 0
         required: false
+        i18n: false
       - name: descriptionHtml
         label: Descrição (HTML)
         widget: text
         required: false
+        i18n: true
       - name: pros
         label: Prós
         widget: list
         required: false
-        field: { name: item, label: Item, widget: string }
+        i18n: true
+        field:
+          name: item
+          label: Item
+          widget: string
       - name: cons
         label: Contras
         widget: list
         required: false
-        field: { name: item, label: Item, widget: string }
+        i18n: true
+        field:
+          name: item
+          label: Item
+          widget: string
       - name: trustpilotUrl
         label: URL Trustpilot
         widget: string
         required: false
         pattern: ['^https?://', 'url inválida']
+        i18n: false
       - name: brandUrl
         label: URL da marca
         widget: string
         required: false
         pattern: ['^https?://', 'url inválida']
+        i18n: false
       - name: brandTrust
         label: Confiança da marca
         widget: object
         required: false
+        i18n: false
         fields:
-          - {
-              name: rating,
-              label: Avaliação,
-              widget: number,
-              min: 0,
-              max: 5,
-              step: 0.1,
-              required: false,
-            }
-          - {
-              name: reviews,
-              label: Nº de avaliações,
-              widget: number,
-              min: 0,
-              required: false,
-            }
+          - name: rating
+            label: Avaliação
+            widget: number
+            required: false
+            min: 0
+            max: 5
+            step: 0.1
+            i18n: false
+          - name: reviews
+            label: Nº de avaliações
+            widget: number
+            required: false
+            min: 0
+            i18n: false
           - name: source
             label: Fonte
             widget: select
             required: false
+            i18n: false
             options:
               - { label: Trustpilot, value: trustpilot }
               - { label: Google, value: google }
               - { label: Site, value: site }
-          - {
-              name: url,
-              label: URL da fonte,
-              widget: string,
-              required: false,
-              pattern: ['^https?://', 'url inválida'],
-            }
+          - name: url
+            label: URL da fonte
+            widget: string
+            required: false
+            pattern: ['^https?://', 'url inválida']
+            i18n: false
       - name: merchants
         label: Lojas/Comerciantes
         widget: list
         required: false
+        i18n: true
         fields:
-          - { name: name, label: Nome, widget: string }
-          - {
-              name: url,
-              label: URL,
-              widget: string,
-              pattern: ['^https?://', 'url inválida'],
-            }
-          - { name: label, label: Rótulo, widget: string, required: false }
+          - name: name
+            label: Nome
+            widget: string
+            i18n: true
+          - name: url
+            label: URL
+            widget: string
+            pattern: ['^https?://', 'url inválida']
+            i18n: false
+          - name: label
+            label: Rótulo
+            widget: string
+            required: false
+            i18n: true

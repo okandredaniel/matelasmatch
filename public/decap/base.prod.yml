@@ -1,3 +1,7 @@
+i18n:
+  structure: multiple_folders
+  locales: [fr, pt, es, en]
+  default_locale: fr
 backend:
   name: github
   repo: okandredaniel/matelasmatch
