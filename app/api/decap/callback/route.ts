@@ -50,7 +50,7 @@ export async function GET(request: Request) {
     info,
     null,
     2
-  )}</pre><div><button id="post">Enviar token ao CMS</button><button id="copy">Copiar token</button><a href="/admin">Abrir Admin</a></div><pre id="out"></pre><script>const out=document.getElementById('out');function log(){out.textContent=[...arguments].map(x=>typeof x==='string'?x:JSON.stringify(x)).join(' ')+\"\\n\"+out.textContent}const ok=${JSON.stringify(
+  )}</pre><div><button id="post">Enviar token ao CMS</button><button id="copy">Copiar token</button><a href="/admin">Abrir Admin</a></div><pre id="out"></pre><script>const out=document.getElementById('out');function log(){out.textContent=[...arguments].map(x=>typeof x==='string'?x:JSON.stringify(x)).join(' ')+"\\n"+out.textContent}const ok=${JSON.stringify(
     msgOk
   )};const err=${JSON.stringify(msgErr)};const token=${JSON.stringify(
     token
