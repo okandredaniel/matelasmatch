@@ -13,18 +13,31 @@
     <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
     <script src="https://unpkg.com/decap-cms@^3/dist/decap-cms.js"></script>
     <script>
-      async function loadYml(url) {
-        const r = await fetch(url);
-        if (!r.ok) throw new Error(url);
+      async function y(u) {
+        const r = await fetch(u);
+        if (!r.ok) throw new Error(u);
         return jsyaml.load(await r.text());
       }
+
+      window.addEventListener('message', (e) => {
+        if (typeof e.data !== 'string') return;
+        if (!e.data.startsWith('authorization:github:success:')) return;
+        try {
+          const json = e.data.slice('authorization:github:success:'.length);
+          const { token } = JSON.parse(json);
+          localStorage.setItem('decap-cms-user', JSON.stringify({ token }));
+          localStorage.setItem('netlify-cms-user', JSON.stringify({ token }));
+          location.reload();
+        } catch {}
+      });
+
       window.addEventListener('load', async () => {
         const isDev = location.hostname === 'localhost';
-        const base = await loadYml(
+        const base = await y(
           isDev ? '/decap/base.dev.yml' : '/decap/base.prod.yml'
         );
-        const brands = await loadYml('/decap/collections/brands.yml');
-        const mattresses = await loadYml('/decap/collections/mattresses.yml');
+        const brands = await y('/decap/collections/brands.yml');
+        const mattresses = await y('/decap/collections/mattresses.yml');
         const collections = [
           ...(brands.collections || []),
           ...(mattresses.collections || []),

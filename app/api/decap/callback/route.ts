@@ -20,6 +20,7 @@ export async function GET(request: Request) {
       )}, '*');window.close();</script>`
     );
   }
+
   const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
     method: 'POST',
     headers: { Accept: 'application/json' },
@@ -43,6 +44,7 @@ export async function GET(request: Request) {
       )}, '*');window.close();</script>`
     );
   }
+
   const ok = `authorization:github:success:${JSON.stringify({
     token: data.access_token,
   })}`;
