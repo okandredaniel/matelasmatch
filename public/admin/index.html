@@ -16,46 +16,54 @@
       const L = (...a) => console.log('[admin]', ...a);
       const E = (...a) => console.error('[admin]', ...a);
 
-      async function loadYml(url) {
-        L('fetch', url);
-        const r = await fetch(url, { cache: 'no-store' });
+      async function loadYml(u) {
+        L('fetch', u);
+        const r = await fetch(u, { cache: 'no-store' });
         if (!r.ok) {
-          E('fetch-failed', url, r.status);
-          throw new Error(url);
+          E('fetch-failed', u, r.status);
+          throw new Error(u);
         }
         const t = await r.text();
-        L('fetched', url, t.length);
+        L('fetched', u, t.length);
         const y = jsyaml.load(t);
-        L('parsed', url);
+        L('parsed', u);
         return y;
+      }
+
+      function shapeForDecap(token, profile) {
+        return {
+          token,
+          backendName: 'github',
+          user: profile
+            ? {
+                login: profile.login || null,
+                name: profile.name || null,
+                avatar_url: profile.avatar_url || null,
+                html_url: profile.html_url || null,
+              }
+            : undefined,
+        };
       }
 
       async function saveGithubUserToken(token) {
         L('token-received');
         try {
-          const resp = await fetch('https://api.github.com/user', {
+          const r = await fetch('https://api.github.com/user', {
             headers: {
               Authorization: `token ${token}`,
               Accept: 'application/vnd.github+json',
             },
           });
-          const profile = await resp.json();
-          const payload = {
-            token,
-            user: {
-              login: profile.login,
-              name: profile.name,
-              avatar_url: profile.avatar_url,
-            },
-            provider: 'github',
-          };
+          const profile = await r.json();
+          const payload = shapeForDecap(token, profile);
           localStorage.setItem('decap-cms-user', JSON.stringify(payload));
           localStorage.setItem('netlify-cms-user', JSON.stringify(payload));
-          L('token-stored', { login: profile.login });
+          L('token-stored', { login: payload.user?.login || null });
         } catch (err) {
           E('save-token-error', String(err));
-          localStorage.setItem('decap-cms-user', JSON.stringify({ token }));
-          localStorage.setItem('netlify-cms-user', JSON.stringify({ token }));
+          const payload = shapeForDecap(token);
+          localStorage.setItem('decap-cms-user', JSON.stringify(payload));
+          localStorage.setItem('netlify-cms-user', JSON.stringify(payload));
         }
       }
 
@@ -68,6 +76,7 @@
           L('stored-user', {
             decap: !!ua?.token,
             netlify: !!ub?.token,
+            backend: ua?.backendName || ub?.backendName || null,
             login: ua?.user?.login || ub?.user?.login || null,
           });
         } catch (e) {
@@ -79,21 +88,20 @@
         'message',
         async (e) => {
           if (typeof e.data !== 'string') return;
-          const okPrefix = 'authorization:github:success:';
-          const errPrefix = 'authorization:github:error:';
+          const ok = 'authorization:github:success:';
+          const er = 'authorization:github:error:';
           L('postMessage', e.origin, e.data.slice(0, 80));
           try {
-            if (e.data.startsWith(okPrefix)) {
-              const { token } = JSON.parse(
-                e.data.slice(okPrefix.length) || '{}'
-              );
-              if (!token) return E('missing-token');
+            if (e.data.startsWith(ok)) {
+              const { token } = JSON.parse(e.data.slice(ok.length) || '{}');
+              if (!token) {
+                E('missing-token');
+                return;
+              }
               await saveGithubUserToken(token);
               location.reload();
-            } else if (e.data.startsWith(errPrefix)) {
-              const payload = JSON.parse(
-                e.data.slice(errPrefix.length) || '{}'
-              );
+            } else if (e.data.startsWith(er)) {
+              const payload = JSON.parse(e.data.slice(er.length) || '{}');
               E('oauth-error', payload);
             }
           } catch (err) {
@@ -104,16 +112,16 @@
       );
 
       function waitForCMS() {
-        return new Promise((resolve, reject) => {
-          if (window.CMS) return resolve(window.CMS);
+        return new Promise((res, rej) => {
+          if (window.CMS) return res(window.CMS);
           const t0 = Date.now();
           const i = setInterval(() => {
             if (window.CMS) {
               clearInterval(i);
-              resolve(window.CMS);
+              res(window.CMS);
             } else if (Date.now() - t0 > 7000) {
               clearInterval(i);
-              reject(new Error('CMS not loaded'));
+              rej(new Error('CMS not loaded'));
             }
           }, 50);
         });
