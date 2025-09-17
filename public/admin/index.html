@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+Ø<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -13,151 +13,45 @@
     <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
     <script src="https://unpkg.com/decap-cms@^3/dist/decap-cms.js"></script>
     <script>
-      const L = (...a) => console.log('[admin]', ...a);
-      const E = (...a) => console.error('[admin]', ...a);
-
       async function loadYml(u) {
-        L('fetch', u);
         const r = await fetch(u, { cache: 'no-store' });
-        if (!r.ok) {
-          E('fetch-failed', u, r.status);
-          throw new Error(u);
-        }
-        const t = await r.text();
-        L('fetched', u, t.length);
-        const y = jsyaml.load(t);
-        L('parsed', u);
-        return y;
+        if (!r.ok) throw new Error(u);
+        return jsyaml.load(await r.text());
       }
-
-      function shapeForDecap(token, profile) {
-        return {
-          token,
-          backendName: 'github',
-          user: profile
-            ? {
-                login: profile.login || null,
-                name: profile.name || null,
-                avatar_url: profile.avatar_url || null,
-                html_url: profile.html_url || null,
-              }
-            : undefined,
-        };
+      function persistToken(token) {
+        const payload = JSON.stringify({ token, backendName: 'github' });
+        localStorage.setItem('decap-cms-user', payload);
+        localStorage.setItem('netlify-cms-user', payload);
       }
-
-      async function saveGithubUserToken(token) {
-        L('token-received');
-        try {
-          const r = await fetch('https://api.github.com/user', {
-            headers: {
-              Authorization: `token ${token}`,
-              Accept: 'application/vnd.github+json',
-            },
-          });
-          const profile = await r.json();
-          const payload = shapeForDecap(token, profile);
-          localStorage.setItem('decap-cms-user', JSON.stringify(payload));
-          localStorage.setItem('netlify-cms-user', JSON.stringify(payload));
-          L('token-stored', { login: payload.user?.login || null });
-        } catch (err) {
-          E('save-token-error', String(err));
-          const payload = shapeForDecap(token);
-          localStorage.setItem('decap-cms-user', JSON.stringify(payload));
-          localStorage.setItem('netlify-cms-user', JSON.stringify(payload));
-        }
-      }
-
-      function readStoredUser() {
-        try {
-          const a = localStorage.getItem('decap-cms-user');
-          const b = localStorage.getItem('netlify-cms-user');
-          const ua = a ? JSON.parse(a) : null;
-          const ub = b ? JSON.parse(b) : null;
-          L('stored-user', {
-            decap: !!ua?.token,
-            netlify: !!ub?.token,
-            backend: ua?.backendName || ub?.backendName || null,
-            login: ua?.user?.login || ub?.user?.login || null,
-          });
-        } catch (e) {
-          E('read-stored-user-error', String(e));
-        }
-      }
-
       window.addEventListener(
         'message',
-        async (e) => {
+        (e) => {
           if (typeof e.data !== 'string') return;
-          const ok = 'authorization:github:success:';
-          const er = 'authorization:github:error:';
-          L('postMessage', e.origin, e.data.slice(0, 80));
-          try {
-            if (e.data.startsWith(ok)) {
-              const { token } = JSON.parse(e.data.slice(ok.length) || '{}');
-              if (!token) {
-                E('missing-token');
-                return;
+          const p = 'authorization:github:success:';
+          if (e.data.startsWith(p)) {
+            try {
+              const { token } = JSON.parse(e.data.slice(p.length) || '{}');
+              if (token) {
+                persistToken(token);
+                location.reload();
               }
-              await saveGithubUserToken(token);
-              location.reload();
-            } else if (e.data.startsWith(er)) {
-              const payload = JSON.parse(e.data.slice(er.length) || '{}');
-              E('oauth-error', payload);
-            }
-          } catch (err) {
-            E('msg-handler-error', String(err));
+            } catch {}
           }
         },
         false
       );
-
-      function waitForCMS() {
-        return new Promise((res, rej) => {
-          if (window.CMS) return res(window.CMS);
-          const t0 = Date.now();
-          const i = setInterval(() => {
-            if (window.CMS) {
-              clearInterval(i);
-              res(window.CMS);
-            } else if (Date.now() - t0 > 7000) {
-              clearInterval(i);
-              rej(new Error('CMS not loaded'));
-            }
-          }, 50);
-        });
-      }
-
       window.addEventListener('load', async () => {
-        L('page-load', location.href);
-        readStoredUser();
-        try {
-          const isDev = location.hostname === 'localhost';
-          const baseUrl = isDev
-            ? '/decap/base.dev.yml'
-            : '/decap/base.prod.yml';
-          const [base, brands, mattresses] = await Promise.all([
-            loadYml(baseUrl),
-            loadYml('/decap/collections/brands.yml'),
-            loadYml('/decap/collections/mattresses.yml'),
-          ]);
-          const collections = [
-            ...(brands.collections || []),
-            ...(mattresses.collections || []),
-          ];
-          L('init-cms', {
-            isDev,
-            baseUrl,
-            collections: collections.map((c) => c.name),
-          });
-          await waitForCMS();
-          CMS.init({
-            load_config_file: false,
-            config: { ...base, collections },
-          });
-          L('cms-initialized');
-        } catch (err) {
-          E('init-error', String(err));
-        }
+        const isDev = location.hostname === 'localhost';
+        const base = await loadYml(
+          isDev ? '/decap/base.dev.yml' : '/decap/base.prod.yml'
+        );
+        const brands = await loadYml('/decap/collections/brands.yml');
+        const mattresses = await loadYml('/decap/collections/mattresses.yml');
+        const collections = [
+          ...(brands.collections || []),
+          ...(mattresses.collections || []),
+        ];
+        CMS.init({ load_config_file: false, config: { ...base, collections } });
       });
     </script>
   </body>
