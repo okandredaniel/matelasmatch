@@ -30,6 +30,79 @@
         return y;
       }
 
+      async function saveGithubUserToken(token) {
+        L('token-received');
+        try {
+          const resp = await fetch('https://api.github.com/user', {
+            headers: {
+              Authorization: `token ${token}`,
+              Accept: 'application/vnd.github+json',
+            },
+          });
+          const profile = await resp.json();
+          const payload = {
+            token,
+            user: {
+              login: profile.login,
+              name: profile.name,
+              avatar_url: profile.avatar_url,
+            },
+            provider: 'github',
+          };
+          localStorage.setItem('decap-cms-user', JSON.stringify(payload));
+          localStorage.setItem('netlify-cms-user', JSON.stringify(payload));
+          L('token-stored', { login: profile.login });
+        } catch (err) {
+          E('save-token-error', String(err));
+          localStorage.setItem('decap-cms-user', JSON.stringify({ token }));
+          localStorage.setItem('netlify-cms-user', JSON.stringify({ token }));
+        }
+      }
+
+      function readStoredUser() {
+        try {
+          const a = localStorage.getItem('decap-cms-user');
+          const b = localStorage.getItem('netlify-cms-user');
+          const ua = a ? JSON.parse(a) : null;
+          const ub = b ? JSON.parse(b) : null;
+          L('stored-user', {
+            decap: !!ua?.token,
+            netlify: !!ub?.token,
+            login: ua?.user?.login || ub?.user?.login || null,
+          });
+        } catch (e) {
+          E('read-stored-user-error', String(e));
+        }
+      }
+
+      window.addEventListener(
+        'message',
+        async (e) => {
+          if (typeof e.data !== 'string') return;
+          const okPrefix = 'authorization:github:success:';
+          const errPrefix = 'authorization:github:error:';
+          L('postMessage', e.origin, e.data.slice(0, 80));
+          try {
+            if (e.data.startsWith(okPrefix)) {
+              const { token } = JSON.parse(
+                e.data.slice(okPrefix.length) || '{}'
+              );
+              if (!token) return E('missing-token');
+              await saveGithubUserToken(token);
+              location.reload();
+            } else if (e.data.startsWith(errPrefix)) {
+              const payload = JSON.parse(
+                e.data.slice(errPrefix.length) || '{}'
+              );
+              E('oauth-error', payload);
+            }
+          } catch (err) {
+            E('msg-handler-error', String(err));
+          }
+        },
+        false
+      );
+
       function waitForCMS() {
         return new Promise((resolve, reject) => {
           if (window.CMS) return resolve(window.CMS);
@@ -46,47 +119,9 @@
         });
       }
 
-      window.addEventListener(
-        'message',
-        (e) => {
-          if (typeof e.data !== 'string') return;
-          L('postMessage', e.origin, e.data.slice(0, 80));
-          const okPrefix = 'authorization:github:success:';
-          const errPrefix = 'authorization:github:error:';
-          try {
-            if (e.data.startsWith(okPrefix)) {
-              const { token } = JSON.parse(
-                e.data.slice(okPrefix.length) || '{}'
-              );
-              if (token) {
-                localStorage.setItem(
-                  'decap-cms-user',
-                  JSON.stringify({ token })
-                );
-                localStorage.setItem(
-                  'netlify-cms-user',
-                  JSON.stringify({ token })
-                );
-                L('token-saved');
-                location.reload();
-              } else {
-                E('token-missing');
-              }
-            } else if (e.data.startsWith(errPrefix)) {
-              const payload = JSON.parse(
-                e.data.slice(errPrefix.length) || '{}'
-              );
-              E('oauth-error', payload);
-            }
-          } catch (err) {
-            E('msg-handler-error', String(err));
-          }
-        },
-        false
-      );
-
       window.addEventListener('load', async () => {
         L('page-load', location.href);
+        readStoredUser();
         try {
           const isDev = location.hostname === 'localhost';
           const baseUrl = isDev
