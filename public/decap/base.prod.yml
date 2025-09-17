@@ -1,0 +1,8 @@
+backend:
+  name: github
+  repo: okandredaniel/matelasmatch
+  branch: main
+  base_url: https://www.matelasmatch.fr
+  auth_endpoint: /api/decap/auth
+media_folder: public/uploads
+public_folder: /uploads

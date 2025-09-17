@@ -1,0 +1,13 @@
+collections:
+  - name: brands
+    label: Marcas
+    folder: content/brands
+    create: true
+    identifier_field: slug
+    slug: '{{slug}}'
+    format: json
+    extension: json
+    fields:
+      - { name: title, label: Nome, widget: string }
+      - { name: slug, label: Slug, widget: string }
+      - { name: website, label: Website, widget: string, required: false }

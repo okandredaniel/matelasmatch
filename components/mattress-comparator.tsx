@@ -1,15 +1,17 @@
-import { mattresses } from '@/data/mattresses';
+import { getAllMattresses } from '@/lib/mattresses';
 import Script from 'next/script';
 import { MattressCard } from './mattress-card';
 
-export function MattressComparator() {
+export async function MattressComparator() {
   const toPriceNumber = (p?: string) =>
     p ? Number(p.replace(/[^\d,.-]/g, '').replace(',', '.')) : undefined;
+
+  const mattresses = await getAllMattresses();
 
   const listJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    itemListElement: mattresses.map((m: any, i: number) => {
+    itemListElement: mattresses.map((m, i: number) => {
       const price = toPriceNumber(m.price);
       return {
         '@type': 'ListItem',
@@ -62,7 +64,7 @@ export function MattressComparator() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           role="list"
         >
-          {mattresses.map((mattress: any) => (
+          {mattresses.map((mattress) => (
             <li key={mattress.id}>
               <MattressCard mattress={mattress} />
             </li>

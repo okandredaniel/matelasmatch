@@ -1,0 +1,173 @@
+collections:
+  - name: mattresses
+    label: Colchões
+    folder: content/mattresses
+    create: true
+    identifier_field: slug
+    slug: '{{fields.slug}}'
+    format: json
+    extension: json
+    fields:
+      - { name: id, label: ID, widget: number }
+      - name: brand
+        label: Marca
+        widget: relation
+        collection: brands
+        search_fields: [title]
+        value_field: title
+        display_fields: [title]
+      - { name: name, label: Nome do produto, widget: string }
+      - { name: slug, label: Slug, widget: string }
+      - { name: type, label: Tipo, widget: string }
+      - { name: comfort, label: Conforto, widget: string, required: false }
+      - { name: firmness, label: Firmeza, widget: string, required: false }
+      - { name: price, label: Preço, widget: string }
+      - {
+          name: originalPrice,
+          label: Preço original,
+          widget: string,
+          required: false,
+        }
+      - {
+          name: rating,
+          label: Avaliação,
+          widget: number,
+          min: 0,
+          max: 5,
+          step: 0.1,
+        }
+      - { name: reviews, label: Nº de avaliações, widget: number }
+      - { name: image, label: Imagem principal, widget: image, required: false }
+      - name: images
+        label: Galeria de imagens
+        widget: list
+        required: false
+        field: { name: item, label: Imagem, widget: image }
+      - name: benefits
+        label: Benefícios
+        widget: list
+        required: false
+        field: { name: item, label: Item, widget: string }
+      - name: features
+        label: Características
+        widget: list
+        required: false
+        field: { name: item, label: Item, widget: string }
+      - { name: badge, label: Selo, widget: string, required: false }
+      - { name: amazonLink, label: Link Amazon, widget: string }
+      - { name: asin, label: ASIN, widget: string, required: false }
+      - {
+          name: thicknessCm,
+          label: Espessura (cm),
+          widget: number,
+          required: false,
+        }
+      - {
+          name: warrantyYears,
+          label: Garantia (anos),
+          widget: number,
+          required: false,
+        }
+      - {
+          name: trialNights,
+          label: Teste (noites),
+          widget: number,
+          required: false,
+        }
+      - name: materials
+        label: Materiais
+        widget: list
+        required: false
+        field: { name: item, label: Item, widget: string }
+      - name: certifications
+        label: Certificações
+        widget: list
+        required: false
+        field: { name: item, label: Item, widget: string }
+      - name: sizes
+        label: Tamanhos
+        widget: list
+        required: false
+        field: { name: item, label: Item, widget: string }
+      - {
+          name: countryOfOrigin,
+          label: País de origem,
+          widget: string,
+          required: false,
+        }
+      - {
+          name: edgeSupport,
+          label: Suporte de borda,
+          widget: string,
+          required: false,
+        }
+      - {
+          name: motionIsolation,
+          label: Isolamento de movimento,
+          widget: string,
+          required: false,
+        }
+      - { name: cooling, label: Resfriamento, widget: string, required: false }
+      - name: bestFor
+        label: Melhor para
+        widget: list
+        required: false
+        field: { name: item, label: Item, widget: string }
+      - {
+          name: weightSupportKg,
+          label: Suporte de peso (kg),
+          widget: number,
+          required: false,
+        }
+      - {
+          name: descriptionHtml,
+          label: Descrição (HTML),
+          widget: text,
+          required: false,
+        }
+      - name: pros
+        label: Prós
+        widget: list
+        required: false
+        field: { name: item, label: Item, widget: string }
+      - name: cons
+        label: Contras
+        widget: list
+        required: false
+        field: { name: item, label: Item, widget: string }
+      - {
+          name: trustpilotUrl,
+          label: URL Trustpilot,
+          widget: string,
+          required: false,
+        }
+      - { name: brandUrl, label: URL da marca, widget: string, required: false }
+      - name: brandTrust
+        label: Confiança da marca
+        widget: object
+        required: false
+        fields:
+          - { name: rating, label: Avaliação, widget: number, required: false }
+          - {
+              name: reviews,
+              label: Nº de avaliações,
+              widget: number,
+              required: false,
+            }
+          - name: source
+            label: Fonte
+            widget: select
+            required: false
+            options:
+              - { label: Trustpilot, value: trustpilot }
+              - { label: Google, value: google }
+              - { label: Site, value: site }
+          - { name: url, label: URL da fonte, widget: string, required: false }
+      - name: merchants
+        label: Lojas/Comerciantes
+        widget: list
+        required: false
+        fields:
+          - { name: name, label: Nome, widget: string }
+          - { name: url, label: URL, widget: string }
+          - { name: label, label: Rótulo, widget: string, required: false }

@@ -10,6 +10,9 @@ const nextConfig = {
       { protocol: 'https', hostname: 'images-eu.ssl-images-amazon.com' },
     ],
   },
+  async rewrites() {
+    return [{ source: '/admin', destination: '/admin/index.html' }];
+  },
 };
 
 export default nextConfig;

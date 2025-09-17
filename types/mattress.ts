@@ -15,6 +15,7 @@ export interface Merchant {
 
 export interface Mattress {
   id: number;
+  slug: string;
   brand: string;
   name: string;
   type: string;
