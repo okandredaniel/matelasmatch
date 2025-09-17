@@ -16,7 +16,7 @@ import { SpecsTable } from '@/components/product/specs-table';
 import { StarRating } from '@/components/product/star-rating';
 import { TrustIcons } from '@/components/product/trust-icons';
 import { comfortLevels, mattressTypes } from '@/data/filters';
-import { mattresses } from '@/data/mattresses';
+import { getAllMattresses, getMattressBySlug } from '@/lib/mattresses';
 import { absoluteUrl } from '@/lib/site';
 import { toBrandSlug, toProductSlug } from '@/lib/slug';
 import { ChevronRight } from 'lucide-react';
@@ -64,28 +64,18 @@ type PageProps = { params: PageParams };
 
 export const dynamicParams = true;
 
-export async function generateStaticParams() {
-  return mattresses.map((m) => ({
-    brand: m.brand ? toBrandSlug(m.brand) : 'marque',
-    slug: toProductSlug(m.name),
-  }));
+export async function generateStaticParams(): Promise<PageParams[]> {
+  const items = await getAllMattresses();
+  return items
+    .filter((m) => m.brand && m.name)
+    .map((m) => ({
+      brand: toBrandSlug(m.brand),
+      slug: toProductSlug(m.name),
+    }));
 }
 
-function findMattressByParams({ brand, slug }: PageParams) {
-  const brandNorm = toBrandSlug(brand || '');
-  const slugNorm = toProductSlug(slug || '');
-  let found = mattresses.find(
-    (m) =>
-      toBrandSlug(m.brand || '') === brandNorm &&
-      toProductSlug(m.name) === slugNorm
-  );
-  if (found) return found;
-  found = mattresses.find((m) => toProductSlug(m.name) === slugNorm);
-  return found;
-}
-
-export default function Page({ params }: PageProps) {
-  const mattress = findMattressByParams(params);
+export default async function Page({ params }: PageProps) {
+  const mattress = await getMattressBySlug(params.slug);
   if (!mattress) notFound();
 
   const m = mattress!;

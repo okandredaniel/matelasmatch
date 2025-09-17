@@ -1,11 +1,11 @@
 import { blogPosts } from '@/data/blogposts';
-import { mattresses } from '@/data/mattresses';
+import { getAllMattresses } from '@/lib/mattresses';
 import { toBrandSlug, toProductSlug } from '@/lib/slug';
 import type { MetadataRoute } from 'next';
 
 const siteUrl = 'https://www.matelasmatch.fr';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date().toISOString();
 
   const staticRoutes = [
@@ -26,6 +26,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'weekly' as const,
     priority: 0.7,
   }));
+
+  const mattresses = await getAllMattresses();
 
   const productRoutes = mattresses.map((m) => {
     const brand = m.brand ? toBrandSlug(m.brand) : 'marque';

@@ -1,3 +1,4 @@
+import { toProductSlug } from '@/lib/slug';
 import { Mattress } from '@/types/mattress';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -16,4 +17,20 @@ export async function getAllMattresses(): Promise<Mattress[]> {
       })
   );
   return items;
+}
+
+export async function getMattressBySlug(
+  slug: string
+): Promise<Mattress | null> {
+  try {
+    const raw = await fs.readFile(path.join(dir, `${slug}.json`), 'utf8');
+    return JSON.parse(raw) as Mattress;
+  } catch {
+    /* empty */
+  }
+  const items = await getAllMattresses();
+  const found =
+    items.find((m) => m.slug === slug || toProductSlug(m.name) === slug) ||
+    null;
+  return found;
 }

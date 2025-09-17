@@ -1,23 +1,26 @@
 import { AmazonButton } from '@/components/amazon-button';
 import { Card, CardContent } from '@/components/ui/card';
-import { mattresses } from '@/data/mattresses';
+import { getAllMattresses } from '@/lib/mattresses';
 import { calcSavingsPct } from '@/lib/product';
 import { toBrandSlug, toProductSlug } from '@/lib/slug';
+import { Mattress } from '@/types/mattress';
 import { ChevronRight, Star } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 type Props = { currentId: number; type: string; max?: number };
 
-export function RelatedProducts({ currentId, type, max = 6 }: Props) {
+export async function RelatedProducts({ currentId, type, max = 6 }: Props) {
+  const mattresses = await getAllMattresses();
+
   const items = mattresses
-    .filter((m) => m.id !== currentId && m.type === type)
+    .filter((m: Mattress) => m.id !== currentId && m.type === type)
     .slice(0, max);
   if (!items.length) return null;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-      {items.map((r) => {
+      {items.map((r: Mattress) => {
         const brand = r.brand ? toBrandSlug(r.brand) : 'marque';
         const slug = toProductSlug(r.name);
         const href = `/matelas/${brand}/${slug}`;
