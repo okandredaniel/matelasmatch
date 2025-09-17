@@ -1,0 +1,5 @@
+backend:
+  name: test-repo
+media_folder: public/uploads
+public_folder: /uploads
+collections: []

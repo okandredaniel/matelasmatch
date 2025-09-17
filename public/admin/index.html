@@ -13,36 +13,108 @@
     <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
     <script src="https://unpkg.com/decap-cms@^3/dist/decap-cms.js"></script>
     <script>
-      async function y(u) {
-        const r = await fetch(u);
-        if (!r.ok) throw new Error(u);
-        return jsyaml.load(await r.text());
+      const L = (...a) => console.log('[admin]', ...a);
+      const E = (...a) => console.error('[admin]', ...a);
+
+      async function loadYml(url) {
+        L('fetch', url);
+        const r = await fetch(url, { cache: 'no-store' });
+        if (!r.ok) {
+          E('fetch-failed', url, r.status);
+          throw new Error(url);
+        }
+        const t = await r.text();
+        L('fetched', url, t.length);
+        const y = jsyaml.load(t);
+        L('parsed', url);
+        return y;
       }
 
-      window.addEventListener('message', (e) => {
-        if (typeof e.data !== 'string') return;
-        if (!e.data.startsWith('authorization:github:success:')) return;
-        try {
-          const json = e.data.slice('authorization:github:success:'.length);
-          const { token } = JSON.parse(json);
-          localStorage.setItem('decap-cms-user', JSON.stringify({ token }));
-          localStorage.setItem('netlify-cms-user', JSON.stringify({ token }));
-          location.reload();
-        } catch {}
-      });
+      function waitForCMS() {
+        return new Promise((resolve, reject) => {
+          if (window.CMS) return resolve(window.CMS);
+          const t0 = Date.now();
+          const i = setInterval(() => {
+            if (window.CMS) {
+              clearInterval(i);
+              resolve(window.CMS);
+            } else if (Date.now() - t0 > 7000) {
+              clearInterval(i);
+              reject(new Error('CMS not loaded'));
+            }
+          }, 50);
+        });
+      }
+
+      window.addEventListener(
+        'message',
+        (e) => {
+          if (typeof e.data !== 'string') return;
+          L('postMessage', e.origin, e.data.slice(0, 80));
+          const okPrefix = 'authorization:github:success:';
+          const errPrefix = 'authorization:github:error:';
+          try {
+            if (e.data.startsWith(okPrefix)) {
+              const { token } = JSON.parse(
+                e.data.slice(okPrefix.length) || '{}'
+              );
+              if (token) {
+                localStorage.setItem(
+                  'decap-cms-user',
+                  JSON.stringify({ token })
+                );
+                localStorage.setItem(
+                  'netlify-cms-user',
+                  JSON.stringify({ token })
+                );
+                L('token-saved');
+                location.reload();
+              } else {
+                E('token-missing');
+              }
+            } else if (e.data.startsWith(errPrefix)) {
+              const payload = JSON.parse(
+                e.data.slice(errPrefix.length) || '{}'
+              );
+              E('oauth-error', payload);
+            }
+          } catch (err) {
+            E('msg-handler-error', String(err));
+          }
+        },
+        false
+      );
 
       window.addEventListener('load', async () => {
-        const isDev = location.hostname === 'localhost';
-        const base = await y(
-          isDev ? '/decap/base.dev.yml' : '/decap/base.prod.yml'
-        );
-        const brands = await y('/decap/collections/brands.yml');
-        const mattresses = await y('/decap/collections/mattresses.yml');
-        const collections = [
-          ...(brands.collections || []),
-          ...(mattresses.collections || []),
-        ];
-        CMS.init({ load_config_file: false, config: { ...base, collections } });
+        L('page-load', location.href);
+        try {
+          const isDev = location.hostname === 'localhost';
+          const baseUrl = isDev
+            ? '/decap/base.dev.yml'
+            : '/decap/base.prod.yml';
+          const [base, brands, mattresses] = await Promise.all([
+            loadYml(baseUrl),
+            loadYml('/decap/collections/brands.yml'),
+            loadYml('/decap/collections/mattresses.yml'),
+          ]);
+          const collections = [
+            ...(brands.collections || []),
+            ...(mattresses.collections || []),
+          ];
+          L('init-cms', {
+            isDev,
+            baseUrl,
+            collections: collections.map((c) => c.name),
+          });
+          await waitForCMS();
+          CMS.init({
+            load_config_file: false,
+            config: { ...base, collections },
+          });
+          L('cms-initialized');
+        } catch (err) {
+          E('init-error', String(err));
+        }
       });
     </script>
   </body>
