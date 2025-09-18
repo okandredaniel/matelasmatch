@@ -22,7 +22,10 @@
       "label": "Voir la boutique"
     }
   ],
-  "materials": ["memory_foam", "gel"],
+  "materials": [
+    "memory_foam",
+    "gel"
+  ],
   "trialNights": 100,
   "brandTrust": {
     "rating": 4,
@@ -34,20 +37,29 @@
     "Odeur initiale possible après déballage",
     "Peut sembler chaud aux dormeurs très sensibles à la chaleur"
   ],
-  "sizes": ["90x190", "140x190", "140x200", "160x200", "180x200"],
+  "sizes": [
+    "90x190",
+    "140x190",
+    "140x200",
+    "160x200",
+    "180x200"
+  ],
   "asin": "B0CW1Q9NW3",
   "images": [
-    "bedstory-surmatelas-1.jpg",
-    "bedstory-surmatelas-2.jpg",
-    "bedstory-surmatelas-3.jpg"
+    "/uploads/bedstory-surmatelas-3.jpg",
+    "/uploads/bedstory-surmatelas-1.jpg",
+    "/uploads/bedstory-surmatelas-2.jpg"
   ],
-  "certifications": ["oeko_tex_100", "certipur"],
+  "certifications": [
+    "oeko_tex_100",
+    "certipur"
+  ],
   "cooling": "Gel rafraîchissant et mousse ventilée",
   "warrantyYears": 10,
   "type": "surmatelas",
   "reviews": 1466,
   "id": 1,
-  "image": "bedstory-surmatelas-3.jpg",
+  "image": "/uploads/bedstory-surmatelas-3.jpg",
   "benefits": [
     "Soulage les points de pression et améliore le confort d’un matelas trop ferme",
     "Housse amovible et lavable pour un entretien facile",

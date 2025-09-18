@@ -49,11 +49,7 @@ export function MattressCard({ mattress, className }: MattressCardProps) {
           <Link href={productUrl} className="block">
             <div className="relative overflow-hidden">
               <Image
-                src={
-                  mattress.image
-                    ? `/uploads/${mattress.image}`
-                    : '/placeholder.svg'
-                }
+                src={mattress.image || '/placeholder.svg'}
                 alt={`${mattress.name} — ${typeLabel}${
                   comfortLabel ? `, ${comfortLabel}` : ''
                 }`}

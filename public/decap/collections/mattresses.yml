@@ -10,7 +10,7 @@ collections:
     slug: '{{slug}}'
     path: '{{slug}}'
     summary: '{{name}}'
-    media_folder: 'public/uploads'
+    media_folder: '../../public/uploads'
     public_folder: '/uploads'
     fields:
       - name: id

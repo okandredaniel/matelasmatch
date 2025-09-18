@@ -11,7 +11,7 @@ backend:
   use_graphql: true
 media_folder: public/uploads
 public_folder: /uploads
-media_folder_relative: false
+media_folder_relative: true
 slug:
   encoding: ascii
   clean_accents: true

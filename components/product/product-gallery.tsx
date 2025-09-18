@@ -15,7 +15,7 @@ export function ProductGallery({ images, fallback, title, badge }: Props) {
     <div className="rounded-2xl border border-slate-200 bg-white p-4">
       <div className="relative overflow-hidden rounded-xl ring-1 ring-slate-200">
         <Image
-          src={`/uploads/${src}`}
+          src={src || '/placeholder.svg'}
           alt={title}
           width={1200}
           height={800}
