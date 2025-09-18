@@ -1,25 +1,25 @@
 import { getAllMattresses } from '@/lib/mattresses';
+import { parsePrice, resolveExternalUrl } from '@/lib/product';
+import type { Mattress } from '@/types/mattress';
 import Script from 'next/script';
 import { MattressCard } from './mattress-card';
 
 export async function MattressComparator() {
-  const toPriceNumber = (p?: string) =>
-    p ? Number(p.replace(/[^\d,.-]/g, '').replace(',', '.')) : undefined;
-
   const mattresses = await getAllMattresses();
 
   const listJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    itemListElement: mattresses.map((m, i: number) => {
-      const price = toPriceNumber(m.price);
+    itemListElement: mattresses.map((m: Mattress, i: number) => {
+      const price = parsePrice(m.price);
+      const url = resolveExternalUrl(m);
       return {
         '@type': 'ListItem',
         position: i + 1,
         item: {
           '@type': 'Product',
           name: m.name,
-          url: m.amazonLink,
+          url,
           aggregateRating:
             typeof m.rating === 'number' && typeof m.reviews === 'number'
               ? {
@@ -28,13 +28,14 @@ export async function MattressComparator() {
                   reviewCount: m.reviews,
                 }
               : undefined,
-          offers: price
-            ? {
-                '@type': 'Offer',
-                priceCurrency: 'EUR',
-                price,
-              }
-            : undefined,
+          offers:
+            typeof price === 'number'
+              ? {
+                  '@type': 'Offer',
+                  priceCurrency: 'EUR',
+                  price,
+                }
+              : undefined,
         },
       };
     }),
@@ -64,7 +65,7 @@ export async function MattressComparator() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           role="list"
         >
-          {mattresses.map((mattress) => (
+          {mattresses.map((mattress: Mattress) => (
             <li key={mattress.id}>
               <MattressCard mattress={mattress} />
             </li>

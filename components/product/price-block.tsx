@@ -1,29 +1,25 @@
-function parsePrice(val?: string) {
-  if (!val) return undefined;
-  const n = Number(
-    val
-      .replace(/\u00A0/g, ' ')
-      .replace(/[^\d,.-]/g, '')
-      .replace(',', '.')
-  );
-  return Number.isFinite(n) ? n : undefined;
-}
+import { calcSavingsPct, formatPriceEUR } from '@/lib/product';
 
-type Props = { price: string; originalPrice?: string };
+type Props = { price?: string | number; originalPrice?: string | number };
 
 export function PriceBlock({ price, originalPrice }: Props) {
-  const now = parsePrice(price);
-  const was = parsePrice(originalPrice);
-  const hasSavings =
-    typeof now === 'number' && typeof was === 'number' && was > now;
-  const pct = hasSavings ? Math.round(((was - now) / was) * 100) : undefined;
+  const pct = calcSavingsPct(price, originalPrice);
+
+  const priceText =
+    formatPriceEUR(price) ?? (typeof price === 'string' ? price : '');
+
+  const originalText =
+    formatPriceEUR(originalPrice) ??
+    (typeof originalPrice === 'string' ? originalPrice : undefined);
 
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <span className="text-3xl font-bold text-accent">{price}</span>
-      {originalPrice ? (
+      {priceText ? (
+        <span className="text-3xl font-bold text-accent">{priceText}</span>
+      ) : null}
+      {originalText ? (
         <span className="text-lg text-slate-400 line-through">
-          {originalPrice}
+          {originalText}
         </span>
       ) : null}
       {pct ? (

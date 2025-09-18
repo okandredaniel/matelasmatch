@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { comfortLevels, mattressTypes } from '@/data/filters';
+import { calcSavingsPct, formatPriceEUR, parsePrice } from '@/lib/product';
 import { toBrandSlug, toProductSlug } from '@/lib/slug';
 import type { Mattress } from '@/types/mattress';
 import { Star } from 'lucide-react';
@@ -17,12 +18,6 @@ import Link from 'next/link';
 
 const typeMap = new Map(mattressTypes.map((o) => [o.value, o.label]));
 const comfortMap = new Map(comfortLevels.map((o) => [o.value, o.label]));
-
-function parsePrice(val?: string) {
-  if (!val) return undefined;
-  const n = Number(val.replace(/[^\d,.-]/g, '').replace(',', '.'));
-  return Number.isFinite(n) ? n : undefined;
-}
 
 interface MattressCardProps {
   mattress: Mattress;
@@ -37,10 +32,11 @@ export function MattressCard({ mattress, className }: MattressCardProps) {
   const stars = Math.round(mattress.rating || 0);
   const priceNow = parsePrice(mattress.price);
   const priceWas = parsePrice(mattress.originalPrice);
-  const hasSavings = !!(priceNow && priceWas && priceWas > priceNow);
-  const savingsPct = hasSavings
-    ? Math.round(((priceWas! - priceNow!) / priceWas!) * 100)
-    : undefined;
+  const savingsPct = calcSavingsPct(mattress.price, mattress.originalPrice);
+  const hasSavings =
+    typeof priceNow === 'number' &&
+    typeof priceWas === 'number' &&
+    priceWas > priceNow;
   const featureList = mattress.features?.length
     ? mattress.features
     : mattress.benefits || [];
@@ -121,11 +117,11 @@ export function MattressCard({ mattress, className }: MattressCardProps) {
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-2xl font-bold text-accent">
-                {mattress.price}
+                {formatPriceEUR(mattress.price)}
               </span>
-              {mattress.originalPrice ? (
+              {hasSavings ? (
                 <span className="text-lg text-slate-400 line-through">
-                  {mattress.originalPrice}
+                  {formatPriceEUR(mattress.originalPrice)}
                 </span>
               ) : null}
               {savingsPct ? (
