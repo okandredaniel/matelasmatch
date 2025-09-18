@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -10,15 +10,17 @@
   </head>
   <body>
     <div id="nc-root"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
     <script src="https://unpkg.com/decap-cms@^3/dist/decap-cms.js"></script>
+    <script src="https://unpkg.com/decap-cms-locales@^3/dist/pt.js"></script>
+
     <script>
-      (function setInitialLocale() {
+      (function setLocales() {
         try {
-          localStorage.setItem('cms.i18n.locale', 'fr');
+          if (window.PT) CMS.registerLocale('pt', window.PT);
           localStorage.setItem('cms.i18n.enabled', 'true');
-          localStorage.removeItem('netlify-cms.locale');
-          localStorage.removeItem('decap-cms.locale');
+          localStorage.setItem('cms.i18n.locale', 'fr');
         } catch {}
       })();
 
@@ -95,6 +97,7 @@
         CMS.init({
           load_config_file: false,
           config: { ...base, collections },
+          locale: 'pt',
         });
       });
     </script>
