@@ -10,7 +10,7 @@ collections:
     identifier_field: name
     slug: '{{slug}}'
     path: '{{locale}}/{{slug}}'
-    summary: '{{fields.name}}'
+    summary: '{{name}}'
     fields:
       - { name: name, label: Nome, widget: string, required: true, i18n: false }
       - {
