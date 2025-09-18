@@ -1,4 +1,3 @@
-import { toProductSlug } from '@/lib/slug';
 import type { Mattress } from '@/types/mattress';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -21,7 +20,7 @@ async function walk(dir: string): Promise<string[]> {
     for (const e of entries) {
       const p = path.join(dir, e.name);
       if (e.isDirectory()) files.push(...(await walk(p)));
-      else if (e.isFile() && p.toLowerCase().endsWith('.json')) files.push(p);
+      else if (e.isFile() && /\.fr\.json$/i.test(p)) files.push(p);
     }
     return files;
   } catch {
@@ -30,7 +29,7 @@ async function walk(dir: string): Promise<string[]> {
 }
 
 function fileSlug(p: string): string {
-  return path.basename(p).replace(/\.json$/i, '');
+  return path.basename(p).replace(/\.fr\.json$/i, '');
 }
 
 async function readJSON<T>(p: string): Promise<T> {
@@ -44,8 +43,8 @@ export async function getAllMattresses(): Promise<Mattress[]> {
   const items = await Promise.all(
     files.map(async (f) => {
       const data = await readJSON<Mattress>(f);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if (!data.slug) (data as any).slug = fileSlug(f);
+      if (!('slug' in data) || !data.slug)
+        (data as Mattress & { slug: string }).slug = fileSlug(f);
       return data;
     })
   );
@@ -54,14 +53,8 @@ export async function getAllMattresses(): Promise<Mattress[]> {
 
 export async function getMattressBySlug(
   slug: string
-): Promise<Mattress | null> {
+): Promise<Mattress | undefined> {
   const items = await getAllMattresses();
-  const s = slug.toLowerCase();
-  const found =
-    items.find((m) => {
-      const a = (m.slug || '').toLowerCase();
-      const b = toProductSlug(m.name).toLowerCase();
-      return a === s || b === s;
-    }) || null;
+  const found = items.find((m) => m.slug === slug);
   return found;
 }

@@ -1,24 +1,20 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { toBrandSlug, toProductSlug } from '@/lib/slug';
 import { track } from '@vercel/analytics';
 import { ExternalLink } from 'lucide-react';
 
 type Props = {
   asin: string;
-  brand?: string;
-  product?: string;
+  brand: string;
+  product: string;
   compact?: boolean;
 };
 
 export function AmazonButton({ asin, brand, product, compact }: Props) {
-  const b = brand ? toBrandSlug(brand) : undefined;
-  const p = product ? toProductSlug(product) : undefined;
-
   const qs = new URLSearchParams();
-  if (b) qs.set('brand', b);
-  if (p) qs.set('product', p);
+  qs.set('brand', brand);
+  qs.set('product', product);
   const href = `/go/amazon/${asin}${qs.toString() ? `?${qs.toString()}` : ''}`;
 
   const onClick = () => {

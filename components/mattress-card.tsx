@@ -10,7 +10,6 @@ import {
 } from '@/components/ui/card';
 import { comfortLevels, mattressTypes } from '@/data/filters';
 import { calcSavingsPct, formatPriceEUR, parsePrice } from '@/lib/product';
-import { toBrandSlug, toProductSlug } from '@/lib/slug';
 import type { Mattress } from '@/types/mattress';
 import { Star } from 'lucide-react';
 import Image from 'next/image';
@@ -40,9 +39,7 @@ export function MattressCard({ mattress, className }: MattressCardProps) {
   const featureList = mattress.features?.length
     ? mattress.features
     : mattress.benefits || [];
-  const productUrl = `/matelas/${toBrandSlug(
-    mattress.brand || ''
-  )}/${toProductSlug(mattress.name)}`;
+  const productUrl = `/matelas/${mattress.slug}/${mattress.slug}`;
   const ratingLabel = `${mattress.rating} sur 5, ${mattress.reviews} avis`;
 
   return (
@@ -52,7 +49,11 @@ export function MattressCard({ mattress, className }: MattressCardProps) {
           <Link href={productUrl} className="block">
             <div className="relative overflow-hidden">
               <Image
-                src={mattress.image || '/placeholder.svg'}
+                src={
+                  mattress.image
+                    ? `/uploads/${mattress.image}`
+                    : '/placeholder.svg'
+                }
                 alt={`${mattress.name} — ${typeLabel}${
                   comfortLabel ? `, ${comfortLabel}` : ''
                 }`}
@@ -106,10 +107,10 @@ export function MattressCard({ mattress, className }: MattressCardProps) {
                 ))}
               </div>
               <span className="text-sm font-medium text-foreground">
-                {mattress.rating.toFixed(1)}
+                {Number(mattress.rating).toFixed(1)}
               </span>
               <span className="text-sm text-slate-500">
-                ({mattress.reviews.toLocaleString('fr-FR')})
+                ({Number(mattress.reviews).toLocaleString('fr-FR')})
               </span>
             </div>
           </div>

@@ -66,7 +66,7 @@ export async function MattressComparator() {
           role="list"
         >
           {mattresses.map((mattress: Mattress) => (
-            <li key={mattress.id}>
+            <li key={mattress.slug || mattress.id}>
               <MattressCard mattress={mattress} />
             </li>
           ))}

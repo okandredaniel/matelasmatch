@@ -19,11 +19,10 @@ import { comfortLevels, mattressTypes } from '@/data/filters';
 import { listMattressParams } from '@/lib/content';
 import { getMattressBySlug } from '@/lib/mattresses';
 import { absoluteUrl } from '@/lib/site';
-import { toBrandSlug, toProductSlug } from '@/lib/slug';
 import { ChevronRight } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 
 export async function generateMetadata({
   params,
@@ -74,13 +73,13 @@ export default async function Page({ params }: PageProps) {
   if (!mattress) notFound();
 
   const m = mattress!;
-  const canonicalBrand = toBrandSlug(m.brand || params.brand);
-  const canonicalSlug = toProductSlug(m.name);
-  const requestedBrand = toBrandSlug(params.brand);
-  const requestedSlug = toProductSlug(params.slug);
-  if (requestedBrand !== canonicalBrand || requestedSlug !== canonicalSlug) {
-    redirect(`/matelas/${canonicalBrand}/${canonicalSlug}`);
-  }
+  // const canonicalBrand = toBrandSlug(m.brand || params.brand);
+  // const canonicalSlug = toProductSlug(m.name);
+  // const requestedBrand = toBrandSlug(params.brand);
+  // const requestedSlug = toProductSlug(params.slug);
+  // if (requestedBrand !== canonicalBrand || requestedSlug !== canonicalSlug) {
+  //   redirect(`/matelas/${canonicalBrand}/${canonicalSlug}`);
+  // }
 
   const typeLabel = typeMap.get(m.type) || m.type;
   const comfortKey = m.firmness || m.comfort || '';
@@ -105,10 +104,10 @@ export default async function Page({ params }: PageProps) {
               { href: '/', label: 'Accueil' },
               { href: '/comparateur', label: 'Comparateur' },
               ...(m.brand
-                ? [{ href: `/matelas/${canonicalBrand}`, label: m.brand }]
+                ? [{ href: `/matelas/${m.brand}`, label: m.brand }]
                 : []),
               {
-                href: `/matelas/${canonicalBrand}/${canonicalSlug}`,
+                href: `/matelas/${m.brand}/${m.slug}`,
                 label: m.name,
                 current: true,
               },
