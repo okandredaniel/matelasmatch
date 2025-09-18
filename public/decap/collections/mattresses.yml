@@ -3,17 +3,25 @@ collections:
     label: Colchões
     folder: content/mattresses
     create: true
-    identifier_field: name
-    slug: '{{fields.brand}}-{{slug}}'
+    i18n: true
     format: json
     extension: json
-    i18n: true
+    identifier_field: name
+    slug: '{{slug}}'
+    path: '{{slug}}'
+    summary: '{{name}}'
     fields:
       - name: id
         label: ID
         widget: number
         required: true
         min: 1
+        i18n: false
+      - name: slug
+        label: Slug
+        widget: string
+        required: true
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'slug inválido']
         i18n: false
       - name: brand
         label: Marca

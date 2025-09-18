@@ -1,0 +1,71 @@
+{
+  "id": 1,
+  "brand": "emma",
+  "name": "Emma Original",
+  "slug": "emma-original",
+  "type": "Mousse à mémoire de forme",
+  "comfort": "Accueil moelleux avec soutien ferme",
+  "firmness": "Moelleux-moyen (H2)",
+  "price": 479.0,
+  "rating": 4.4,
+  "reviews": 1261,
+  "images": [],
+  "benefits": [
+    "Très bonne indépendance de couchage",
+    "100 nuits d’essai",
+    "10 ans de garantie",
+    "Housse thermorégulatrice"
+  ],
+  "features": [
+    "Épaisseur de 25 cm",
+    "3 couches de mousse (Airgocell®, viscoélastique, HRX)",
+    "Certifié OEKO-TEX® Standard 100"
+  ],
+  "badge": "Meilleure vente en France",
+  "amazonLink": "https://www.amazon.fr/Emma-Original-%C3%A9paisseur-certifi%C3%A9-Oeko-Tex/dp/B077PWGY96",
+  "asin": "B077PWGY96",
+  "thicknessCm": 25,
+  "warrantyYears": 10,
+  "trialNights": 100,
+  "materials": ["memory_foam", "hr_foam"],
+  "certifications": ["oeko_tex_100"],
+  "sizes": ["90x190", "140x190", "160x200", "180x200"],
+  "countryOfOrigin": "de",
+  "edgeSupport": "Soutien de bord correct, peut s’affaisser pour les gabarits lourds",
+  "motionIsolation": "Excellente indépendance de couchage pour les couples",
+  "cooling": "Respirabilité moyenne, peut retenir la chaleur",
+  "bestFor": ["couples", "side_sleepers", "lower_back_pain"],
+  "weightSupportKg": 100,
+  "descriptionHtml": "<p>Le <strong>Emma Original</strong>, souvent présenté comme le matelas le plus vendu en France, est un modèle en mousse de 25&nbsp;cm combinant confort moelleux et soutien ferme. Il offre 100 nuits d’essai et une garantie de 10 ans.</p>",
+  "pros": [
+    "Confort apprécié par une grande majorité de dormeurs",
+    "Bon soulagement des points de pression",
+    "Indépendance de couchage élevée",
+    "Essai 100 nuits et retour gratuit"
+  ],
+  "cons": [
+    "Respirabilité moyenne pour les personnes ayant chaud",
+    "Soutien en bord de matelas moyen",
+    "Peut être trop souple au-delà de ~100 kg"
+  ],
+  "trustpilotUrl": "https://fr.trustpilot.com/review/emma.fr",
+  "brandUrl": "https://www.emma.fr",
+  "brandTrust": {
+    "rating": 3.9,
+    "reviews": 65603,
+    "source": "trustpilot",
+    "url": "https://fr.trustpilot.com/review/emma.fr"
+  },
+  "merchants": [
+    {
+      "name": "Emma",
+      "url": "https://www.emma.fr/matelas-original/",
+      "label": "Acheter sur le site officiel"
+    },
+    {
+      "name": "Amazon",
+      "url": "https://www.amazon.fr/Emma-Original-%C3%A9paisseur-certifi%C3%A9-Oeko-Tex/dp/B077PWGY96",
+      "label": "Acheter sur Amazon"
+    }
+  ]
+}
