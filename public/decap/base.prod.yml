@@ -1,5 +1,5 @@
 i18n:
-  structure: multiple_folders
+  structure: multiple_files
   locales: [fr, pt, es, en]
   default_locale: fr
 backend:
