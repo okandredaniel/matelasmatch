@@ -4,6 +4,8 @@ import type {
   BlogPost,
   ContentItem,
 } from '@/types/content';
+import fs from 'node:fs';
+import path from 'node:path';
 
 export function isBlogPost(item: ContentItem): item is BlogPost {
   return item.kind === 'blog';
@@ -70,6 +72,7 @@ export function filterByTag<T extends BaseContent>(
 export function buildJsonLd(
   item: ContentItem,
   siteUrl: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Record<string, any> {
   const url = `${siteUrl}${contentHref(item)}`;
   const image = item.image ? `${siteUrl}${item.image}` : undefined;
@@ -92,4 +95,25 @@ export function buildJsonLd(
     articleSection: item.category,
     keywords: (item.tags || []).join(', '),
   };
+}
+
+export function listMattressParams(
+  locale = 'fr'
+): { brand: string; slug: string }[] {
+  const root = path.join(process.cwd(), 'content', 'mattresses');
+  const candidates = [path.join(root, locale), root];
+  const base = candidates.find((p) => fs.existsSync(p));
+  if (!base) return [];
+  const brands = fs
+    .readdirSync(base, { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name);
+  const out: { brand: string; slug: string }[] = [];
+  for (const brand of brands) {
+    const dir = path.join(base, brand);
+    if (!fs.existsSync(dir)) continue;
+    const files = fs.readdirSync(dir).filter((n) => n.endsWith('.json'));
+    for (const f of files) out.push({ brand, slug: f.replace(/\.json$/, '') });
+  }
+  return out;
 }

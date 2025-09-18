@@ -5,6 +5,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev --turbopack",
+    "cms": "pnpm dlx decap-server",
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

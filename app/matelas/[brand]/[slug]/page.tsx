@@ -16,7 +16,8 @@ import { SpecsTable } from '@/components/product/specs-table';
 import { StarRating } from '@/components/product/star-rating';
 import { TrustIcons } from '@/components/product/trust-icons';
 import { comfortLevels, mattressTypes } from '@/data/filters';
-import { getAllMattresses, getMattressBySlug } from '@/lib/mattresses';
+import { listMattressParams } from '@/lib/content';
+import { getMattressBySlug } from '@/lib/mattresses';
 import { absoluteUrl } from '@/lib/site';
 import { toBrandSlug, toProductSlug } from '@/lib/slug';
 import { ChevronRight } from 'lucide-react';
@@ -65,13 +66,7 @@ type PageProps = { params: PageParams };
 export const dynamicParams = true;
 
 export async function generateStaticParams(): Promise<PageParams[]> {
-  const items = await getAllMattresses();
-  return items
-    .filter((m) => m.brand && m.name)
-    .map((m) => ({
-      brand: toBrandSlug(m.brand),
-      slug: toProductSlug(m.name),
-    }));
+  return listMattressParams('fr').map(({ brand, slug }) => ({ brand, slug }));
 }
 
 export default async function Page({ params }: PageProps) {
