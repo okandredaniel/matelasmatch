@@ -16,11 +16,17 @@
     <script src="https://unpkg.com/decap-cms-locales@^3/dist/pt.js"></script>
 
     <script>
-      (function setLocales() {
+      (function () {
         try {
           if (window.PT) CMS.registerLocale('pt', window.PT);
+        } catch {}
+      })();
+      (function () {
+        try {
           localStorage.setItem('cms.i18n.enabled', 'true');
           localStorage.setItem('cms.i18n.locale', 'fr');
+          localStorage.removeItem('netlify-cms.locale');
+          localStorage.removeItem('decap-cms.locale');
         } catch {}
       })();
 
