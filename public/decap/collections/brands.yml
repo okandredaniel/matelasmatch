@@ -3,8 +3,10 @@ collections:
     label: Marcas
     folder: content/brands
     create: true
-    identifier_field: name
-    slug: '{{fields.slug}}'
+    identifier_field: slug
+    slug: '{{slug}}'
+    path: '{{slug}}'
+    summary: '{{fields.name}} ({{fields.slug}})'
     format: json
     extension: json
     i18n: true
@@ -74,7 +76,7 @@ collections:
       - name: country
         label: País
         widget: select
-        required: true
+        required: false
         i18n: false
         options:
           - { label: França, value: fr }
