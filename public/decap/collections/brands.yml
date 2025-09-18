@@ -3,76 +3,79 @@ collections:
     label: Marcas
     folder: content/brands
     create: true
-    identifier_field: slug
-    slug: '{{slug}}'
-    path: '{{slug}}'
-    summary: '{{fields.name}} ({{fields.slug}})'
+    i18n: true
     format: json
     extension: json
-    i18n: true
+    identifier_field: name
+    slug: '{{slug}}'
+    path: '{{slug}}'
+    summary: '{{fields.name}}'
     fields:
-      - name: name
-        label: Nome
-        widget: string
-        required: true
-        i18n: false
-      - name: slug
-        label: Slug
-        widget: string
-        required: true
-        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'slug inválido']
-        i18n: false
-      - name: logo
-        label: Logo
-        widget: image
-        required: false
-        i18n: false
-      - name: website
-        label: Website
-        widget: string
-        required: false
-        pattern: ['^https?://', 'url inválida']
-        i18n: false
-      - name: trustpilotUrl
-        label: URL Trustpilot
-        widget: string
-        required: false
-        pattern: ['^https?://', 'url inválida']
-        i18n: false
-      - name: rating
-        label: Avaliação
-        widget: number
-        required: false
-        min: 0
-        max: 5
-        step: 0.1
-        i18n: false
-      - name: reviews
-        label: Nº de avaliações
-        widget: number
-        required: false
-        min: 0
-        i18n: false
-      - name: description
-        label: Descrição
-        widget: text
-        required: false
-        i18n: true
+      - { name: name, label: Nome, widget: string, required: true, i18n: false }
+      - {
+          name: slug,
+          label: Slug,
+          widget: string,
+          required: true,
+          pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'slug inválido'],
+          i18n: false,
+        }
+      - { name: logo, label: Logo, widget: image, required: false, i18n: false }
+      - {
+          name: website,
+          label: Website,
+          widget: string,
+          required: false,
+          pattern: ['^https?://', 'url inválida'],
+          i18n: false,
+        }
+      - {
+          name: trustpilotUrl,
+          label: URL Trustpilot,
+          widget: string,
+          required: false,
+          pattern: ['^https?://', 'url inválida'],
+          i18n: false,
+        }
+      - {
+          name: rating,
+          label: Avaliação,
+          widget: number,
+          required: false,
+          min: 0,
+          max: 5,
+          step: 0.1,
+          i18n: false,
+        }
+      - {
+          name: reviews,
+          label: Nº de avaliações,
+          widget: number,
+          required: false,
+          min: 0,
+          i18n: false,
+        }
+      - {
+          name: description,
+          label: Descrição,
+          widget: text,
+          required: false,
+          i18n: true,
+        }
       - name: social
         label: Social
         widget: list
         required: false
         i18n: false
         fields:
-          - name: name
-            label: Nome
-            widget: string
-            i18n: false
-          - name: url
-            label: URL
-            widget: string
-            pattern: ['^https?://', 'url inválida']
-            i18n: false
+          - { name: name, label: Nome, widget: string, i18n: false }
+          - {
+              name: url,
+              label: URL,
+              widget: string,
+              pattern: ['^https?://', 'url inválida'],
+              i18n: false,
+            }
       - name: country
         label: País
         widget: select
