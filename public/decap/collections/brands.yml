@@ -3,12 +3,13 @@ collections:
     label: Marcas
     folder: content/brands
     create: true
-    i18n: true
+    i18n:
+      structure: multiple_folders
     format: json
     extension: json
     identifier_field: name
     slug: '{{slug}}'
-    path: '{{slug}}'
+    path: '{{locale}}/{{slug}}'
     summary: '{{fields.name}}'
     fields:
       - { name: name, label: Nome, widget: string, required: true, i18n: false }
