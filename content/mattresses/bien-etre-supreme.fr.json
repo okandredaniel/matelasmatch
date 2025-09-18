@@ -1,0 +1,76 @@
+{
+  "id": 2,
+  "brand": "hypnia",
+  "name": "Bien-être Suprême",
+  "slug": "bien-etre-supreme",
+  "type": "Hybride",
+  "comfort": "Accueil moelleux avec soutien ferme",
+  "firmness": "Mi-ferme (6/10)",
+  "price": 755.0,
+  "rating": 4.8,
+  "reviews": 2792,
+  "images": [],
+  "benefits": [
+    "Très bonne indépendance de couchage",
+    "Surmatelas intégré 2-en-1",
+    "120 nuits d’essai",
+    "10 ans de garantie"
+  ],
+  "features": [
+    "Épaisseur de 30 cm",
+    "Ressorts ensachés avec 7 zones de confort",
+    "Mousse à mémoire de forme + latex",
+    "Textiles certifiés OEKO-TEX® Standard 100, mousses CertiPUR®"
+  ],
+  "badge": "Élu Produit de l’année 2024",
+  "amazonLink": "https://www.amazon.fr/Bien-%C3%8Atre-Ressorts-Ensach%C3%A9s-Moelleux-%C3%89quilibr%C3%A9/dp/B016D59FQK",
+  "asin": "B016D59FQK",
+  "thicknessCm": 30,
+  "warrantyYears": 10,
+  "trialNights": 120,
+  "materials": ["memory_foam", "latex", "pocket_springs"],
+  "certifications": ["oeko_tex_100", "certipur"],
+  "sizes": ["90x190", "140x190", "160x200", "180x200"],
+  "edgeSupport": "Bon maintien des bords grâce aux ressorts",
+  "motionIsolation": "Excellente indépendance de couchage pour les couples",
+  "cooling": "Bonne aération via ressorts et plateau Tencel®",
+  "bestFor": [
+    "couples",
+    "side_sleepers",
+    "back_sleepers",
+    "lower_back_pain",
+    "hot_sleepers"
+  ],
+  "descriptionHtml": "<p>Le <strong>Hypnia Bien-être Suprême</strong> est un matelas hybride de 30&nbsp;cm avec surmatelas intégré, offrant un accueil moelleux et un soutien ferme. Il combine mémoire de forme, latex et ressorts ensachés, avec 120&nbsp;nuits d’essai et 10&nbsp;ans de garantie.</p>",
+  "pros": [
+    "Confort universel et soutien lombaire",
+    "Très épais (30 cm)",
+    "Indépendance de couchage élevée",
+    "Bon rapport qualité-prix"
+  ],
+  "cons": [
+    "Assez lourd",
+    "Housse non déhoussable",
+    "Moins dynamique pour les très grands gabarits"
+  ],
+  "trustpilotUrl": "https://fr.trustpilot.com/review/hypnia.fr",
+  "brandUrl": "https://hypnia.fr",
+  "brandTrust": {
+    "rating": 4.5,
+    "reviews": 15739,
+    "source": "trustpilot",
+    "url": "https://fr.trustpilot.com/review/hypnia.fr"
+  },
+  "merchants": [
+    {
+      "name": "Hypnia",
+      "url": "https://hypnia.fr/products/matelas-bienetre-supreme",
+      "label": "Acheter sur le site officiel"
+    },
+    {
+      "name": "Amazon",
+      "url": "https://www.amazon.fr/Bien-%C3%8Atre-Ressorts-Ensach%C3%A9s-Moelleux-%C3%89quilibr%C3%A9/dp/B016D59FQK",
+      "label": "Acheter sur Amazon"
+    }
+  ]
+}
