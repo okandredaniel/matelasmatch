@@ -13,16 +13,27 @@
     <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
     <script src="https://unpkg.com/decap-cms@^3/dist/decap-cms.js"></script>
     <script>
+      (function setInitialLocale() {
+        try {
+          localStorage.setItem('cms.i18n.locale', 'fr');
+          localStorage.setItem('cms.i18n.enabled', 'true');
+          localStorage.removeItem('netlify-cms.locale');
+          localStorage.removeItem('decap-cms.locale');
+        } catch {}
+      })();
+
       async function loadYml(u) {
         const r = await fetch(u, { cache: 'no-store' });
         if (!r.ok) throw new Error(u);
         return jsyaml.load(await r.text());
       }
+
       function persistToken(token) {
         const payload = JSON.stringify({ token, backendName: 'github' });
         localStorage.setItem('decap-cms-user', payload);
         localStorage.setItem('netlify-cms-user', payload);
       }
+
       window.addEventListener(
         'message',
         (e) => {
@@ -40,11 +51,13 @@
         },
         false
       );
+
       window.addEventListener('load', async () => {
         const isDev = location.hostname === 'localhost';
         const base = await loadYml(
           isDev ? '/decap/base.dev.yml' : '/decap/base.prod.yml'
         );
+
         const [
           brands,
           mattresses,
@@ -66,6 +79,7 @@
           loadYml('/decap/collections/pages.yml'),
           loadYml('/decap/collections/settings.yml'),
         ]);
+
         const collections = [
           ...(brands.collections || []),
           ...(mattresses.collections || []),
@@ -77,6 +91,7 @@
           ...(pages.collections || []),
           ...(settings.collections || []),
         ];
+
         CMS.init({
           load_config_file: false,
           config: { ...base, collections },
