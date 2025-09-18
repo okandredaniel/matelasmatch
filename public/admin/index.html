@@ -19,15 +19,13 @@
       (function () {
         try {
           var L = window.fr || window.FR;
-          if (L) CMS.registerLocale('fr', L);
-        } catch {}
-      })();
-      (function () {
-        try {
-          localStorage.setItem('decap-cms.locale', 'fr');
-          localStorage.setItem('netlify-cms.locale', 'fr');
-          localStorage.setItem('cms.i18n.enabled', 'true');
-          localStorage.setItem('cms.i18n.locale', 'fr');
+          if (
+            L &&
+            window.CMS &&
+            typeof window.CMS.registerLocale === 'function'
+          ) {
+            window.CMS.registerLocale('fr', L);
+          }
         } catch {}
       })();
 
@@ -105,11 +103,25 @@
           ...(settings.collections || []),
         ];
 
-        CMS.init({
-          load_config_file: false,
-          config: { ...base, collections },
-          locale: 'fr',
-        });
+        if (window.initCMS) {
+          window.initCMS({
+            config: {
+              ...base,
+              locale: 'fr',
+              load_config_file: false,
+              collections,
+            },
+          });
+        } else if (window.CMS && typeof window.CMS.init === 'function') {
+          window.CMS.init({
+            config: {
+              ...base,
+              locale: 'fr',
+              load_config_file: false,
+              collections,
+            },
+          });
+        }
       });
     </script>
   </body>
