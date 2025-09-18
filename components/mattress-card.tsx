@@ -39,7 +39,7 @@ export function MattressCard({ mattress, className }: MattressCardProps) {
   const featureList = mattress.features?.length
     ? mattress.features
     : mattress.benefits || [];
-  const productUrl = `/matelas/${mattress.slug}/${mattress.slug}`;
+  const productUrl = `/matelas/${mattress.brand}/${mattress.slug}`;
   const ratingLabel = `${mattress.rating} sur 5, ${mattress.reviews} avis`;
 
   return (
