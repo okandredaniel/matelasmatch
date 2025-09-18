@@ -1,6 +1,5 @@
 import { blogPosts } from '@/data/blogposts';
-import { getAllMattresses } from '@/lib/mattresses';
-import { toBrandSlug, toProductSlug } from '@/lib/slug';
+import { listMattressParams } from '@/lib/content';
 import type { MetadataRoute } from 'next';
 
 const siteUrl = 'https://www.matelasmatch.fr';
@@ -27,18 +26,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  const mattresses = await getAllMattresses();
-
-  const productRoutes = mattresses.map((m) => {
-    const brand = m.brand ? toBrandSlug(m.brand) : 'marque';
-    const slug = toProductSlug(m.name);
-    return {
-      url: `${siteUrl}/matelas/${brand}/${slug}`,
-      lastModified: now,
-      changeFrequency: 'daily' as const,
-      priority: 0.8,
-    };
-  });
+  const pairs = listMattressParams('fr');
+  const productRoutes = pairs.map(({ brand, slug }) => ({
+    url: `${siteUrl}/matelas/${brand}/${slug}`,
+    lastModified: now,
+    changeFrequency: 'daily' as const,
+    priority: 0.8,
+  }));
 
   const postRoutes = blogPosts.map((p) => ({
     url: `${siteUrl}/blog/${p.slug}`,
