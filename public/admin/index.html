@@ -18,15 +18,16 @@
     <script>
       (function () {
         try {
-          if (window.FR) CMS.registerLocale('fr', window.FR);
+          var L = window.fr || window.FR;
+          if (L) CMS.registerLocale('fr', L);
         } catch {}
       })();
       (function () {
         try {
+          localStorage.setItem('decap-cms.locale', 'fr');
+          localStorage.setItem('netlify-cms.locale', 'fr');
           localStorage.setItem('cms.i18n.enabled', 'true');
           localStorage.setItem('cms.i18n.locale', 'fr');
-          localStorage.removeItem('netlify-cms.locale');
-          localStorage.removeItem('decap-cms.locale');
         } catch {}
       })();
 
