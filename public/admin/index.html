@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="pt">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -13,18 +13,18 @@
 
     <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.8.3/dist/decap-cms.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/decap-cms-locales@3/dist/fr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/decap-cms-locales@3/dist/pt.js"></script>
 
     <script>
       (function () {
         try {
-          var L = window.fr || window.FR;
+          var L = window.pt || window.PT;
           if (
             L &&
             window.CMS &&
             typeof window.CMS.registerLocale === 'function'
           ) {
-            window.CMS.registerLocale('fr', L);
+            window.CMS.registerLocale('pt', L);
           }
         } catch {}
       })();
@@ -107,7 +107,7 @@
           window.initCMS({
             config: {
               ...base,
-              locale: 'fr',
+              locale: 'pt',
               load_config_file: false,
               collections,
             },
@@ -116,7 +116,7 @@
           window.CMS.init({
             config: {
               ...base,
-              locale: 'fr',
+              locale: 'pt',
               load_config_file: false,
               collections,
             },
